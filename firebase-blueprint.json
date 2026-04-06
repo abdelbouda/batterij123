@@ -1,0 +1,27 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "A home battery product",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Name of the battery" },
+        "brand": { "type": "string", "description": "Brand of the battery" },
+        "capacity": { "type": "string", "description": "Storage capacity" },
+        "price": { "type": "string", "description": "Price in Euros" },
+        "rating": { "type": "number", "description": "Average rating" },
+        "reviews": { "type": "number", "description": "Number of reviews" },
+        "image": { "type": "string", "description": "URL to product image" },
+        "description": { "type": "string", "description": "Detailed description" },
+        "features": { "type": "array", "items": { "type": "string" }, "description": "List of features" }
+      },
+      "required": ["name", "brand", "capacity", "price", "image"]
+    }
+  },
+  "firestore": {
+    "products": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Collection of home batteries"
+    }
+  }
+}

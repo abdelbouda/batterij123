@@ -1,0 +1,70 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: products
+    // Document ID: auto-generated
+    // Fields:
+    //   - name: string (required)
+    //   - brand: string (required)
+    //   - capacity: string (required)
+    //   - price: string (required)
+    //   - rating: number
+    //   - reviews: number
+    //   - image: string (required)
+    //   - description: string
+    //   - features: list of strings
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+          (request.auth.token.email == "boostercursus@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function isValidProduct(data) {
+      return data.keys().hasAll(['name', 'brand', 'capacity', 'price', 'image']) &&
+             data.name is string && data.name.size() > 0 && data.name.size() < 100 &&
+             data.brand is string && data.brand.size() > 0 && data.brand.size() < 50 &&
+             data.capacity is string && data.capacity.size() > 0 &&
+             data.price is string && data.price.size() > 0 &&
+             data.image is string && data.image.matches("^https?://.*") &&
+             (!('rating' in data) || data.rating is number) &&
+             (!('reviews' in data) || data.reviews is number) &&
+             (!('description' in data) || (data.description is string && data.description.size() < 2000)) &&
+             (!('features' in data) || (data.features is list && data.features.size() < 50));
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /products/{productId} {
+      // Anyone can read products
+      allow read: if true;
+      
+      // Only admins can create, update, or delete products
+      allow create: if isAdmin() && isValidProduct(request.resource.data);
+      allow update: if isAdmin() && isValidProduct(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /users/{userId} {
+      // Users can only read/write their own profile
+      allow read, write: if isAuthenticated() && request.auth.uid == userId;
+    }
+  }
+}
