@@ -1,34 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { auth, db } from '../lib/firebase';
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
-import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import { Plus, Trash2, LogIn, LogOut, ShieldCheck, Database } from 'lucide-react';
-import { handleFirestoreError, OperationType } from '../lib/firestore-errors';
-import { batteries as initialBatteries } from '../data/batteries';
+import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, orderBy } from 'firebase/firestore';
+import { Plus, Trash2, LogIn, LogOut, ShieldCheck, Database, Edit2, X, Save, Eye, EyeOff } from 'lucide-react';
+
+const ADMIN_EMAIL = 'abdelbouda@gmail.com';
 
 export default function Admin() {
   const [user, setUser] = useState<any>(null);
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isSeeding, setIsSeeding] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [newProduct, setNewProduct] = useState({
-    name: '',
-    brand: '',
-    capacity: '',
-    price: '',
-    rating: 5,
-    reviews: 0,
-    image: '',
-    description: '',
-    features: ''
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    name: '', brand: '', capacity: '', price: '', image: '', description: '', features: '', status: 'available'
   });
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      if (user) {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser && currentUser.email === ADMIN_EMAIL) {
+        setUser(currentUser);
         fetchProducts();
+      } else {
+        if (currentUser) await signOut(auth);
+        setUser(null);
       }
       setLoading(false);
     });
@@ -36,232 +30,108 @@ export default function Admin() {
   }, []);
 
   const fetchProducts = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(db, 'products'));
-      const productsData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setProducts(productsData);
-      setError(null);
-    } catch (err) {
-      handleFirestoreError(err, OperationType.LIST, 'products');
-    }
+    const q = query(collection(db, 'products'), orderBy('name', 'asc'));
+    const querySnapshot = await getDocs(q);
+    setProducts(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
   };
 
-  const seedDatabase = async () => {
-    if (!window.confirm("Wilt u de database vullen met voorbeeldproducten?")) return;
-    setIsSeeding(true);
-    try {
-      for (const battery of initialBatteries) {
-        await addDoc(collection(db, 'products'), battery);
-      }
-      fetchProducts();
-      alert("Database succesvol gevuld!");
-    } catch (err) {
-      handleFirestoreError(err, OperationType.CREATE, 'products');
-    } finally {
-      setIsSeeding(false);
-    }
-  };
-
-  const handleLogin = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-    } catch (error) {
-      console.error("Login failed", error);
-    }
-  };
-
-  const handleLogout = async () => {
-    await signOut(auth);
-  };
-
-  const handleAddProduct = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const productData = {
-        ...newProduct,
-        features: newProduct.features.split(',').map(f => f.trim())
-      };
-      await addDoc(collection(db, 'products'), productData);
-      setNewProduct({
-        name: '',
-        brand: '',
-        capacity: '',
-        price: '',
-        rating: 5,
-        reviews: 0,
-        image: '',
-        description: '',
-        features: ''
-      });
-      fetchProducts();
-      setError(null);
-    } catch (err) {
-      setError("Fout bij het toevoegen van product. Controleer of u de juiste rechten heeft.");
-      handleFirestoreError(err, OperationType.CREATE, 'products');
+    const data = { ...formData, features: typeof formData.features === 'string' ? formData.features.split(',').map(f => f.trim()) : formData.features };
+    
+    if (editingId) {
+      await updateDoc(doc(db, 'products', editingId), data);
+      setEditingId(null);
+    } else {
+      await addDoc(collection(db, 'products'), data);
     }
+    
+    setFormData({ name: '', brand: '', capacity: '', price: '', image: '', description: '', features: '', status: 'available' });
+    fetchProducts();
   };
 
-  const handleDeleteProduct = async (id: string) => {
-    if (window.confirm("Weet u zeker dat u dit product wilt verwijderen?")) {
-      try {
-        await deleteDoc(doc(db, 'products', id));
-        fetchProducts();
-        setError(null);
-      } catch (err) {
-        setError("Fout bij het verwijderen van product.");
-        handleFirestoreError(err, OperationType.DELETE, `products/${id}`);
-      }
-    }
+  const startEdit = (product: any) => {
+    setEditingId(product.id);
+    setFormData({ ...product, features: product.features.join(', ') });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  if (loading) return <div className="flex justify-center py-24">Laden...</div>;
+  const toggleStatus = async (product: any) => {
+    const newStatus = product.status === 'available' ? 'unavailable' : 'available';
+    await updateDoc(doc(db, 'products', product.id), { status: newStatus });
+    fetchProducts();
+  };
 
-  if (!user) {
-    return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center py-24 text-center">
-        <ShieldCheck className="mb-6 h-16 w-16 text-gray-400" />
-        <h1 className="text-3xl font-bold text-gray-900">Admin Toegang</h1>
-        <p className="mt-4 text-gray-500">Log in met uw Google-account om producten te beheren.</p>
-        <button
-          onClick={handleLogin}
-          className="mt-8 flex items-center gap-2 rounded-full bg-gray-900 px-8 py-4 text-base font-bold text-white transition-opacity hover:opacity-90"
-        >
-          <LogIn className="h-5 w-5" />
-          Inloggen met Google
-        </button>
-      </div>
-    );
-  }
+  if (loading) return <div className="p-24 text-center italic">Laden...</div>;
+  if (!user) return <div className="p-24 text-center"><ShieldCheck className="mx-auto h-12 w-12 mb-4 text-gray-400" /> <button onClick={() => signInWithPopup(auth, new GoogleAuthProvider())} className="bg-black text-white px-6 py-3 rounded-full font-bold">Admin Login</button></div>;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      {error && (
-        <div className="mb-8 rounded-xl bg-red-50 p-4 text-sm text-red-600">
-          {error}
-        </div>
-      )}
-      <div className="flex items-center justify-between border-b border-gray-200 pb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Productbeheer</h1>
-          <p className="mt-2 text-gray-500">Ingelogd als {user.email}</p>
-        </div>
-        <div className="flex items-center gap-4">
-          <button
-            onClick={seedDatabase}
-            disabled={isSeeding}
-            className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-5 py-2.5 text-sm font-bold text-gray-900 hover:bg-gray-50 disabled:opacity-50"
-          >
-            <Database className="h-4 w-4" />
-            {isSeeding ? 'Bezig...' : 'Database Vullen'}
-          </button>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-5 py-2.5 text-sm font-bold text-gray-900 hover:bg-gray-50"
-          >
-            <LogOut className="h-4 w-4" />
-            Uitloggen
-          </button>
-        </div>
+    <div className="mx-auto max-w-7xl px-4 py-12">
+      <div className="flex justify-between items-center border-b pb-6 mb-8">
+        <h1 className="text-3xl font-bold">Batterij Beheer</h1>
+        <button onClick={() => signOut(auth)} className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-black"><LogOut size={18}/> Uitloggen</button>
       </div>
 
-      <div className="mt-12 grid grid-cols-1 gap-12 lg:grid-cols-3">
-        {/* Add Product Form */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        {/* FORMULIER */}
         <div className="lg:col-span-1">
-          <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-gray-900">Nieuw Product</h2>
-            <form onSubmit={handleAddProduct} className="mt-6 flex flex-col gap-4">
-              <input
-                type="text"
-                placeholder="Productnaam"
-                required
-                className="rounded-lg border border-gray-200 p-3 text-sm focus:border-gray-900 focus:outline-none"
-                value={newProduct.name}
-                onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
-              />
-              <input
-                type="text"
-                placeholder="Merk"
-                required
-                className="rounded-lg border border-gray-200 p-3 text-sm focus:border-gray-900 focus:outline-none"
-                value={newProduct.brand}
-                onChange={(e) => setNewProduct({ ...newProduct, brand: e.target.value })}
-              />
-              <input
-                type="text"
-                placeholder="Capaciteit (bijv. 13.5 kWh)"
-                required
-                className="rounded-lg border border-gray-200 p-3 text-sm focus:border-gray-900 focus:outline-none"
-                value={newProduct.capacity}
-                onChange={(e) => setNewProduct({ ...newProduct, capacity: e.target.value })}
-              />
-              <input
-                type="text"
-                placeholder="Prijs (bijv. 8.500)"
-                required
-                className="rounded-lg border border-gray-200 p-3 text-sm focus:border-gray-900 focus:outline-none"
-                value={newProduct.price}
-                onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
-              />
-              <input
-                type="text"
-                placeholder="Afbeelding URL"
-                required
-                className="rounded-lg border border-gray-200 p-3 text-sm focus:border-gray-900 focus:outline-none"
-                value={newProduct.image}
-                onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })}
-              />
-              <textarea
-                placeholder="Beschrijving"
-                required
-                className="rounded-lg border border-gray-200 p-3 text-sm focus:border-gray-900 focus:outline-none"
-                rows={3}
-                value={newProduct.description}
-                onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
-              />
-              <input
-                type="text"
-                placeholder="Kenmerken (komma gescheiden)"
-                required
-                className="rounded-lg border border-gray-200 p-3 text-sm focus:border-gray-900 focus:outline-none"
-                value={newProduct.features}
-                onChange={(e) => setNewProduct({ ...newProduct, features: e.target.value })}
-              />
-              <button
-                type="submit"
-                className="mt-4 flex items-center justify-center gap-2 rounded-full bg-gray-900 py-4 text-base font-bold text-white transition-opacity hover:opacity-90"
-              >
-                <Plus className="h-5 w-5" />
-                Product Toevoegen
+          <form onSubmit={handleSubmit} className="bg-white p-6 rounded-2xl border shadow-sm sticky top-6">
+            <h2 className="text-lg font-bold mb-4">{editingId ? 'Product Wijzigen' : 'Nieuw Product'}</h2>
+            <div className="space-y-3">
+              <input type="text" placeholder="Naam" required className="w-full p-2 border rounded" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+              <input type="text" placeholder="Merk" required className="w-full p-2 border rounded" value={formData.brand} onChange={e => setFormData({...formData, brand: e.target.value})} />
+              <div className="flex gap-2">
+                <input type="text" placeholder="Capaciteit" className="w-1/2 p-2 border rounded" value={formData.capacity} onChange={e => setFormData({...formData, capacity: e.target.value})} />
+                <input type="text" placeholder="Prijs" className="w-1/2 p-2 border rounded" value={formData.price} onChange={e => setFormData({...formData, price: e.target.value})} />
+              </div>
+              <input type="text" placeholder="Afbeelding URL" className="w-full p-2 border rounded" value={formData.image} onChange={e => setFormData({...formData, image: e.target.value})} />
+              <textarea placeholder="Beschrijving" className="w-full p-2 border rounded" rows={3} value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} />
+              <input type="text" placeholder="Kenmerken (komma gescheiden)" className="w-full p-2 border rounded" value={formData.features} onChange={e => setFormData({...formData, features: e.target.value})} />
+              
+              <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold flex justify-center items-center gap-2">
+                {editingId ? <Save size={20}/> : <Plus size={20}/>} {editingId ? 'Opslaan' : 'Toevoegen'}
               </button>
-            </form>
-          </div>
+              {editingId && <button onClick={() => {setEditingId(null); setFormData({name:'',brand:'',capacity:'',price:'',image:'',description:'',features:'',status:'available'})}} className="w-full text-gray-500 py-1 text-sm">Annuleren</button>}
+            </div>
+          </form>
         </div>
 
-        {/* Product List */}
+        {/* LIJST */}
         <div className="lg:col-span-2">
-          <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-gray-900">Huidige Producten</h2>
-            <div className="mt-6 space-y-4">
-              {products.map((product) => (
-                <div key={product.id} className="flex items-center justify-between border-b border-gray-100 pb-4">
-                  <div className="flex items-center gap-4">
-                    <img src={product.image} alt={product.name} className="h-12 w-12 rounded-lg object-cover" />
-                    <div>
-                      <p className="font-bold text-gray-900">{product.name}</p>
-                      <p className="text-xs text-gray-500">{product.brand} • €{product.price}</p>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => handleDeleteProduct(product.id)}
-                    className="text-red-500 hover:text-red-700 transition-colors"
-                  >
-                    <Trash2 className="h-5 w-5" />
-                  </button>
-                </div>
-              ))}
-              {products.length === 0 && <p className="text-gray-500">Geen producten gevonden.</p>}
-            </div>
+          <div className="bg-white rounded-2xl border overflow-hidden">
+            <table className="w-full text-left">
+              <thead className="bg-gray-50 border-b">
+                <tr>
+                  <th className="p-4 font-bold">Product</th>
+                  <th className="p-4 font-bold">Status</th>
+                  <th className="p-4 font-bold text-right">Acties</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y">
+                {products.map(p => (
+                  <tr key={p.id} className={p.status === 'unavailable' ? 'bg-gray-50 opacity-60' : ''}>
+                    <td className="p-4">
+                      <div className="flex items-center gap-3">
+                        <img src={p.image} className="w-10 h-10 object-cover rounded" alt="" />
+                        <div>
+                          <div className="font-bold">{p.name}</div>
+                          <div className="text-xs text-gray-500">€{p.price}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-4">
+                      <button onClick={() => toggleStatus(p)} className={`text-xs px-2 py-1 rounded-full flex items-center gap-1 ${p.status === 'available' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                        {p.status === 'available' ? <><Eye size={12}/> Live</> : <><EyeOff size={12}/> Offline</>}
+                      </button>
+                    </td>
+                    <td className="p-4 text-right space-x-2">
+                      <button onClick={() => startEdit(p)} className="p-2 hover:bg-gray-100 rounded text-blue-600"><Edit2 size={18}/></button>
+                      <button onClick={async () => {if(confirm('Verwijderen?')) { await deleteDoc(doc(db, 'products', p.id)); fetchProducts(); }}} className="p-2 hover:bg-gray-100 rounded text-red-600"><Trash2 size={18}/></button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
