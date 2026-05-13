@@ -13,7 +13,13 @@
 
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '');
+let stripeInstance: Stripe | null = null;
+function getStripe(): Stripe | null {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) return null;
+  if (!stripeInstance) stripeInstance = new Stripe(key);
+  return stripeInstance;
+}
 
 interface ProductOut {
   id: string;
@@ -58,8 +64,12 @@ export default async function handler(req: any, res: any) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  if (!process.env.STRIPE_SECRET_KEY) {
-    return res.status(500).json({ error: 'Stripe is not configured' });
+  const stripe = getStripe();
+  if (!stripe) {
+    return res.status(500).json({
+      error:
+        'STRIPE_SECRET_KEY is not configured. Set it in Vercel project settings.',
+    });
   }
 
   try {

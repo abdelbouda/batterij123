@@ -1,10 +1,24 @@
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '');
+let stripeInstance: Stripe | null = null;
+function getStripe(): Stripe | null {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) return null;
+  if (!stripeInstance) stripeInstance = new Stripe(key);
+  return stripeInstance;
+}
 
 export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const stripe = getStripe();
+  if (!stripe) {
+    return res.status(500).json({
+      error:
+        'STRIPE_SECRET_KEY is not configured. Set it in Vercel project settings.',
+    });
   }
 
   const { items } = req.body;
