@@ -4,6 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import Stripe from "stripe";
 import dotenv from "dotenv";
+import productsHandler from "./api/products";
 
 dotenv.config();
 
@@ -22,6 +23,8 @@ async function startServer() {
   app.use(express.json());
 
   // API routes
+  app.get("/api/products", (req, res) => productsHandler(req, res));
+
   app.post("/api/create-checkout-session", async (req, res) => {
     if (!stripe) {
       return res.status(500).json({ error: "Stripe is not configured" });

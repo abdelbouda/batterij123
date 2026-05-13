@@ -122,6 +122,8 @@ async function main() {
     });
     console.log('  price:  ', price.id);
 
+    await stripe.products.update(product.id, { default_price: price.id });
+
     const link = await stripe.paymentLinks.create({
       line_items: [{ price: price.id, quantity: 1 }],
       after_completion: {

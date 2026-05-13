@@ -1,10 +1,20 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { Battery, CheckCircle2, ArrowRight, Zap, Shield, TrendingUp, Info } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import BatteryCard from '../components/BatteryCard';
-import { batteries } from '../data/batteries';
+import { fetchProducts, type Product } from '../lib/products';
 
 export default function Home() {
+  const [batteries, setBatteries] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProducts()
+      .then((products) => setBatteries(products.slice(0, 4)))
+      .catch((err) => console.error('Failed to load products', err))
+      .finally(() => setLoading(false));
+  }, []);
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
@@ -114,9 +124,13 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {batteries.map((battery) => (
-              <BatteryCard key={battery.id} battery={battery} />
-            ))}
+            {loading ? (
+              <div className="col-span-full text-center text-gray-500">Producten laden...</div>
+            ) : (
+              batteries.map((battery) => (
+                <BatteryCard key={battery.id} battery={battery} />
+              ))
+            )}
           </div>
         </div>
       </section>
