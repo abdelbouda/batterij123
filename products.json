@@ -1,0 +1,93 @@
+{
+  "source": "https://batterij123.nl",
+  "currency": "eur",
+  "livemode": false,
+  "generatedAt": "2026-05-13T20:29:19.695Z",
+  "products": [
+    {
+      "id": "prod_UVkuQKByj2OWg2",
+      "slug": "marstek-venus-e3",
+      "name": "Marstek Venus E 3.0",
+      "brand": "Marstek",
+      "description": "De nieuwste generatie Venus-serie met verbeterde AI-sturing voor maximale besparing.",
+      "priceEur": 2950,
+      "image": "https://batterij123.nl/images/venuse1.webp",
+      "productUrl": "https://batterij123.nl/producten/marstek-venus-e3",
+      "stripe": {
+        "productId": "prod_UVkuQKByj2OWg2",
+        "priceId": "price_1TWjP6GUaEk9vyiKt9nFqpaV",
+        "paymentLinkId": "plink_1TWjP7GUaEk9vyiKBT2D5fZG",
+        "paymentLinkUrl": "https://buy.stripe.com/test_fZu9AT1OQabR4C98vM2Nq01",
+        "livemode": false
+      }
+    },
+    {
+      "id": "prod_UVkuTPj6PxjBWt",
+      "slug": "indevolt-solidflex-2000",
+      "name": "Indevolt SolidFlex 2000",
+      "brand": "Indevolt",
+      "description": "Robuuste 'solid-state' geïnspireerde opbouw voor extreme veiligheid en lange levensduur.",
+      "priceEur": 3800,
+      "image": "https://batterij123.nl/images/solidflex1.webp",
+      "productUrl": "https://batterij123.nl/producten/indevolt-solidflex-2000",
+      "stripe": {
+        "productId": "prod_UVkuTPj6PxjBWt",
+        "priceId": "price_1TWjP7GUaEk9vyiKkwUrf7qI",
+        "paymentLinkId": "plink_1TWjP7GUaEk9vyiKOxPJN0tk",
+        "paymentLinkUrl": "https://buy.stripe.com/test_14A14nalmcjZ6KheUa2Nq02",
+        "livemode": false
+      }
+    },
+    {
+      "id": "prod_UVkuhGnd6Rfhaw",
+      "slug": "growatt-nexa-2000",
+      "name": "Growatt NEXA 2000",
+      "brand": "Growatt",
+      "description": "Slimme 2000W output batterij van Growatt, perfect voor hybride omvormers.",
+      "priceEur": 3100,
+      "image": "https://batterij123.nl/images/nexa1.webp",
+      "productUrl": "https://batterij123.nl/producten/growatt-nexa-2000",
+      "stripe": {
+        "productId": "prod_UVkuhGnd6Rfhaw",
+        "priceId": "price_1TWjP8GUaEk9vyiKdRWvfYU1",
+        "paymentLinkId": "plink_1TWjP8GUaEk9vyiKSLYg8yjW",
+        "paymentLinkUrl": "https://buy.stripe.com/test_aFabJ1512bfV1pX3bs2Nq03",
+        "livemode": false
+      }
+    },
+    {
+      "id": "prod_UVkucFphtzQpob",
+      "slug": "marstek-venus-a",
+      "name": "Marstek Venus A",
+      "brand": "Marstek",
+      "description": "De instapversie van de Venus serie, betrouwbaar en zeer scherp geprijsd voor de NL markt.",
+      "priceEur": 2400,
+      "image": "https://batterij123.nl/images/venusa1.webp",
+      "productUrl": "https://batterij123.nl/producten/marstek-venus-a",
+      "stripe": {
+        "productId": "prod_UVkucFphtzQpob",
+        "priceId": "price_1TWjP8GUaEk9vyiKh3FLoqPK",
+        "paymentLinkId": "plink_1TWjP9GUaEk9vyiKNg4Kkfuf",
+        "paymentLinkUrl": "https://buy.stripe.com/test_eVq28ralm4Rx6KhcM22Nq04",
+        "livemode": false
+      }
+    },
+    {
+      "id": "prod_UVkubpz5SzG03V",
+      "slug": "ecoflow-stream",
+      "name": "EcoFlow STREAM",
+      "brand": "EcoFlow",
+      "description": "Slimme plug & play stekkerbatterij — direct in het stopcontact, automatisch opladen op zonne-energie of goedkope stroom.",
+      "priceEur": 799,
+      "image": "https://batterij123.nl/images/eco_steam1.webp",
+      "productUrl": "https://batterij123.nl/producten/ecoflow-stream",
+      "stripe": {
+        "productId": "prod_UVkubpz5SzG03V",
+        "priceId": "price_1TWjP9GUaEk9vyiKGSi07UWs",
+        "paymentLinkId": "plink_1TWjP9GUaEk9vyiKroUyPv1C",
+        "paymentLinkUrl": "https://buy.stripe.com/test_bJe3cv8de1Fl5Gd27o2Nq05",
+        "livemode": false
+      }
+    }
+  ]
+}
