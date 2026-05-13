@@ -1,22 +1,12 @@
 import { Star, CheckCircle2, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import type { Product } from '../lib/products';
 
-export interface BatteryProps {
-  id: string;
-  name: string;
-  brand: string;
-  capacity: string;
-  price: string;
-  rating: number;
-  reviews: number;
-  image: string;
-  features: string[];
-  description: string;
-}
+export type BatteryProps = Product;
 
 interface BatteryCardProps {
-  battery: BatteryProps;
+  battery: Product;
   key?: string;
 }
 
@@ -57,23 +47,27 @@ export default function BatteryCard({ battery }: BatteryCardProps) {
           {battery.description}
         </p>
 
-        <div className="mb-6 flex flex-wrap gap-2">
-          {battery.features.slice(0, 3).map((feature, idx) => (
-            <span
-              key={idx}
-              className="flex items-center gap-1 rounded-full bg-gray-100 px-2 py-1 text-[10px] font-medium text-gray-600"
-            >
-              <CheckCircle2 className="h-3 w-3 text-gray-900" />
-              {feature}
-            </span>
-          ))}
-        </div>
+        {battery.features.length > 0 ? (
+          <div className="mb-6 flex flex-wrap gap-2">
+            {battery.features.slice(0, 3).map((feature, idx) => (
+              <span
+                key={idx}
+                className="flex items-center gap-1 rounded-full bg-gray-100 px-2 py-1 text-[10px] font-medium text-gray-600"
+              >
+                <CheckCircle2 className="h-3 w-3 text-gray-900" />
+                {feature}
+              </span>
+            ))}
+          </div>
+        ) : null}
 
         <div className="mt-auto flex items-center justify-between pt-4 border-t border-gray-100">
-          <div className="flex flex-col">
-            <span className="text-xs text-gray-400 uppercase font-bold tracking-wider">Capaciteit</span>
-            <span className="text-lg font-bold text-gray-900">{battery.capacity}</span>
-          </div>
+          {battery.capacity ? (
+            <div className="flex flex-col">
+              <span className="text-xs text-gray-400 uppercase font-bold tracking-wider">Capaciteit</span>
+              <span className="text-lg font-bold text-gray-900">{battery.capacity}</span>
+            </div>
+          ) : <div />}
           <div className="flex flex-col text-right">
             <span className="text-xs text-gray-400 uppercase font-bold tracking-wider">Vanaf</span>
             <span className="text-xl font-bold text-gray-900">€{battery.price}</span>

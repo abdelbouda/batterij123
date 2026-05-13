@@ -1,30 +1,23 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { db } from '../lib/firebase';
-import { collection, onSnapshot } from 'firebase/firestore';
 import BatteryCard from '../components/BatteryCard';
 import { Filter, Search, SlidersHorizontal, X } from 'lucide-react';
 import Fuse from 'fuse.js';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
-import { handleFirestoreError, OperationType } from '../lib/firestore-errors';
+import { fetchProducts, type Product } from '../lib/products';
 
 export default function Products() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [batteries, setBatteries] = useState<any[]>([]);
+  const [batteries, setBatteries] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const searchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, 'products'), (snapshot) => {
-      const productsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setBatteries(productsData);
-      setLoading(false);
-    }, (error) => {
-      handleFirestoreError(error, OperationType.LIST, 'products');
-      setLoading(false);
-    });
-    return () => unsubscribe();
+    fetchProducts()
+      .then((products) => setBatteries(products))
+      .catch((err) => console.error('Failed to load products', err))
+      .finally(() => setLoading(false));
   }, []);
 
   const fuse = useMemo(() => new Fuse(batteries, {

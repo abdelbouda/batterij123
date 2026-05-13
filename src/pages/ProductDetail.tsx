@@ -1,34 +1,25 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { db } from '../lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
-import { Battery, CheckCircle2, ArrowLeft, Star, Zap, Shield, Clock, ShoppingCart } from 'lucide-react';
+import { CheckCircle2, ArrowLeft, Star, Zap, Shield, ShoppingCart, CreditCard } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useCart } from '../context/CartContext';
-import { handleFirestoreError, OperationType } from '../lib/firestore-errors';
+import { fetchProducts, type Product } from '../lib/products';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
-  const [battery, setBattery] = useState<any>(null);
+  const [battery, setBattery] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const { addToCart } = useCart();
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      if (!id) return;
-      try {
-        const docRef = doc(db, 'products', id);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setBattery({ id: docSnap.id, ...docSnap.data() });
-        }
-        setLoading(false);
-      } catch (err) {
-        handleFirestoreError(err, OperationType.GET, `products/${id}`);
-        setLoading(false);
-      }
-    };
-    fetchProduct();
+    if (!id) return;
+    fetchProducts()
+      .then((products) => {
+        const match = products.find((p) => p.id === id);
+        setBattery(match ?? null);
+      })
+      .catch((err) => console.error('Failed to load product', err))
+      .finally(() => setLoading(false));
   }, [id]);
 
   if (loading) return <div className="flex justify-center py-24">Product laden...</div>;
@@ -134,15 +125,21 @@ export default function ProductDetail() {
             </div>
 
             <div className="mt-12 flex flex-col gap-4 sm:flex-row">
-              <button 
+              {battery.paymentLinkUrl ? (
+                <a
+                  href={battery.paymentLinkUrl}
+                  className="flex-1 flex items-center justify-center gap-2 rounded-full bg-gray-900 py-4 text-center text-base font-bold text-white transition-opacity hover:opacity-90"
+                >
+                  <CreditCard className="h-5 w-5" />
+                  Direct afrekenen
+                </a>
+              ) : null}
+              <button
                 onClick={() => addToCart(battery)}
-                className="flex-1 flex items-center justify-center gap-2 rounded-full bg-gray-900 py-4 text-center text-base font-bold text-white transition-opacity hover:opacity-90"
+                className="flex-1 flex items-center justify-center gap-2 rounded-full border border-gray-200 bg-white py-4 text-center text-base font-bold text-gray-900 transition-colors hover:bg-gray-50"
               >
                 <ShoppingCart className="h-5 w-5" />
                 In winkelwagen
-              </button>
-              <button className="flex-1 rounded-full border border-gray-200 bg-white py-4 text-center text-base font-bold text-gray-900 transition-colors hover:bg-gray-50">
-                Download Datasheet
               </button>
             </div>
           </motion.div>
