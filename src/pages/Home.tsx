@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'motion/react';
-import { Battery, CheckCircle2, ArrowRight, Zap, Shield, TrendingUp, Info } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Zap, Shield, TrendingUp, Info } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import BatteryCard from '../components/BatteryCard';
 import JsonLd from '../components/JsonLd';
@@ -40,7 +40,7 @@ export default function Home() {
       <JsonLd id="website" data={websiteSchema()} />
       {listData && <JsonLd id="itemlist" data={listData} />}
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-white py-20 lg:py-32">
+      <section className="relative overflow-hidden bg-white pb-16 pt-8 lg:pb-20 lg:pt-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
             <motion.div
@@ -90,11 +90,47 @@ export default function Home() {
                 Hoe werkt het?
               </Link>
             </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="mt-16 w-full lg:mt-20"
+            >
+              <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <h2 className="text-3xl font-bold tracking-tight text-gray-900">
+                    Populaire Thuisbatterijen
+                  </h2>
+                  <p className="mt-3 text-base text-gray-500">
+                    De best geteste modellen van dit moment.
+                  </p>
+                </div>
+                <Link
+                  to="/producten"
+                  className="inline-flex items-center gap-2 text-sm font-bold text-gray-900 hover:underline"
+                >
+                  Bekijk alle modellen <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                {loading ? (
+                  <div className="col-span-full rounded-3xl border border-dashed border-gray-200 bg-gray-50 py-12 text-center text-gray-500">
+                    Producten laden...
+                  </div>
+                ) : (
+                  batteries.map((battery) => (
+                    <BatteryCard key={battery.id} battery={battery} />
+                  ))
+                )}
+              </div>
+            </motion.div>
           </div>
         </div>
-        
+
         {/* Background Decorative Element */}
-        <div className="absolute top-0 right-0 -z-10 h-full w-1/3 bg-gray-50/50 blur-3xl lg:block hidden"></div>
+        <div className="absolute right-0 top-0 -z-10 hidden h-full w-1/3 bg-gray-50/50 blur-3xl lg:block"></div>
       </section>
 
       {/* Features Section */}
@@ -128,31 +164,6 @@ export default function Home() {
                 Wij werken alleen met de beste installateurs in Nederland voor een veilige en professionele installatie.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Popular Batteries Section */}
-      <section className="bg-white py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-16 flex flex-col items-center text-center lg:flex-row lg:justify-between lg:text-left">
-            <div>
-              <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Populaire Thuisbatterijen</h2>
-              <p className="mt-4 text-lg text-gray-500">De best geteste modellen van dit moment.</p>
-            </div>
-            <Link to="/producten" className="mt-8 flex items-center gap-2 text-sm font-bold text-gray-900 hover:underline lg:mt-0">
-              Bekijk alle modellen <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-          
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {loading ? (
-              <div className="col-span-full text-center text-gray-500">Producten laden...</div>
-            ) : (
-              batteries.map((battery) => (
-                <BatteryCard key={battery.id} battery={battery} />
-              ))
-            )}
           </div>
         </div>
       </section>
