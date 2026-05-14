@@ -2,8 +2,7 @@
  * Shared product types and client-side fetch helper.
  *
  * Products are fetched from Stripe via the /api/products endpoint, which is
- * the source of truth. The Firestore "products" collection is no longer used
- * for displaying the catalog (Admin.tsx may still write to it).
+ * the single source of truth for the storefront catalog.
  */
 
 export interface Product {

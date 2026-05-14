@@ -27,7 +27,7 @@ export default function Header() {
     { name: 'Home', path: '/' },
     { name: 'Producten', path: '/producten' },
     { name: 'Educatie', path: '/educatie' },
-    { name: 'Admin', path: '/admin' },
+    { name: 'Contact', path: '/contact' },
   ];
 
   return (

@@ -1,7 +1,14 @@
-import { Battery, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
+import { Battery, Mail, MessageCircle, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchProducts, type Product } from '../lib/products';
+
+const EMAIL_ADDRESS = 'info@batterij123.nl';
+const PHONE_DISPLAY = '+31 (0)20 123 4567';
+const PHONE_URL = 'tel:+31201234567';
+const WHATSAPP_URL = `https://wa.me/31642008944?text=${encodeURIComponent(
+  'Hoi! Ik heb een vraag over een thuisbatterij van Batterij123.',
+)}`;
 
 export default function Footer() {
   const [topProducts, setTopProducts] = useState<Product[]>([]);
@@ -48,18 +55,34 @@ export default function Footer() {
               De onafhankelijke vergelijker voor thuisbatterijen in Nederland. Wij helpen u de
               beste keuze te maken voor uw energieopslag.
             </p>
-            <div className="flex gap-4">
-              <a href="#" aria-label="Batterij123 op Twitter" className="text-gray-400 hover:text-gray-900 transition-colors">
-                <Twitter className="h-5 w-5" aria-hidden="true" />
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={`mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent(
+                  'Vraag over een thuisbatterij',
+                )}`}
+                aria-label={`Stuur een e-mail naar ${EMAIL_ADDRESS}`}
+                className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:text-gray-900"
+              >
+                <Mail className="h-4 w-4" aria-hidden="true" />
+                E-mail
               </a>
-              <a href="#" aria-label="Batterij123 op Facebook" className="text-gray-400 hover:text-gray-900 transition-colors">
-                <Facebook className="h-5 w-5" aria-hidden="true" />
+              <a
+                href={PHONE_URL}
+                aria-label={`Bel ${PHONE_DISPLAY}`}
+                className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:text-gray-900"
+              >
+                <Phone className="h-4 w-4" aria-hidden="true" />
+                Bel ons
               </a>
-              <a href="#" aria-label="Batterij123 op Instagram" className="text-gray-400 hover:text-gray-900 transition-colors">
-                <Instagram className="h-5 w-5" aria-hidden="true" />
-              </a>
-              <a href="#" aria-label="Batterij123 op LinkedIn" className="text-gray-400 hover:text-gray-900 transition-colors">
-                <Linkedin className="h-5 w-5" aria-hidden="true" />
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open WhatsApp chat"
+                className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:text-gray-900"
+              >
+                <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                WhatsApp
               </a>
             </div>
           </div>
@@ -124,8 +147,15 @@ export default function Footer() {
               Nederland
             </p>
             <p className="text-sm text-gray-500">
-              Email: info@batterij123.nl<br />
-              Tel: +31 (0)20 123 4567
+              Email:{' '}
+              <a href={`mailto:${EMAIL_ADDRESS}`} className="hover:text-gray-900">
+                {EMAIL_ADDRESS}
+              </a>
+              <br />
+              Tel:{' '}
+              <a href={PHONE_URL} className="hover:text-gray-900">
+                {PHONE_DISPLAY}
+              </a>
             </p>
           </div>
         </div>

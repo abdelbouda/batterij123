@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import { CartProvider } from './context/CartContext';
 import CartDrawer from './components/CartDrawer';
@@ -12,7 +13,7 @@ const Products = lazy(() => import('./pages/Products'));
 const ProductDetail = lazy(() => import('./pages/ProductDetail'));
 const Education = lazy(() => import('./pages/Education'));
 const EducationDetail = lazy(() => import('./pages/EducationDetail'));
-const Admin = lazy(() => import('./pages/Admin'));
+const Contact = lazy(() => import('./pages/Contact'));
 const Success = lazy(() => import('./pages/Success'));
 const SearchResults = lazy(() => import('./pages/Search'));
 
@@ -28,6 +29,7 @@ export default function App() {
   return (
     <CartProvider>
       <Router>
+        <ScrollToTop />
         <div className="flex min-h-screen flex-col bg-white selection:bg-gray-900 selection:text-white">
           <Header />
           <CartDrawer />
@@ -39,10 +41,9 @@ export default function App() {
                 <Route path="/producten/:id" element={<ProductDetail />} />
                 <Route path="/educatie" element={<Education />} />
                 <Route path="/educatie/:slug" element={<EducationDetail />} />
-                <Route path="/admin" element={<Admin />} />
+                <Route path="/contact" element={<Contact />} />
                 <Route path="/zoeken" element={<SearchResults />} />
                 <Route path="/success" element={<Success />} />
-                <Route path="/contact" element={<div className="py-24 text-center text-gray-500">Contactpagina komt binnenkort...</div>} />
               </Routes>
             </Suspense>
           </main>
