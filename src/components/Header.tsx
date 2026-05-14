@@ -1,4 +1,4 @@
-import { Battery, Menu, X, ShoppingCart } from 'lucide-react';
+import { Battery, Menu, X, ShoppingCart, Mail } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../lib/utils';
@@ -10,6 +10,11 @@ const WHATSAPP_NUMBER = '31642008944';
 const WHATSAPP_DISPLAY = '06-42008944';
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
   'Hoi! Ik heb een vraag over een thuisbatterij van Batterij123.',
+)}`;
+
+const EMAIL_ADDRESS = 'info@batterij123.nl';
+const EMAIL_URL = `mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent(
+  'Vraag over een thuisbatterij',
 )}`;
 
 export default function Header() {
@@ -68,10 +73,18 @@ export default function Header() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Stuur een WhatsApp naar ${WHATSAPP_DISPLAY}`}
-            className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-5 py-2 text-sm font-bold text-white shadow-sm transition-opacity hover:opacity-90"
+            className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-4 py-2 text-sm font-bold text-white shadow-sm transition-opacity hover:opacity-90"
           >
             <WhatsAppIcon className="h-4 w-4" />
-            WhatsApp {WHATSAPP_DISPLAY}
+            WhatsApp
+          </a>
+          <a
+            href={EMAIL_URL}
+            aria-label={`Stuur een e-mail naar ${EMAIL_ADDRESS}`}
+            className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-bold text-gray-900 transition-colors hover:bg-gray-100"
+          >
+            <Mail className="h-4 w-4" aria-hidden="true" />
+            {EMAIL_ADDRESS}
           </a>
         </nav>
 
@@ -129,7 +142,16 @@ export default function Header() {
               onClick={() => setIsOpen(false)}
             >
               <WhatsAppIcon className="h-4 w-4" />
-              WhatsApp {WHATSAPP_DISPLAY}
+              WhatsApp
+            </a>
+            <a
+              href={EMAIL_URL}
+              aria-label={`Stuur een e-mail naar ${EMAIL_ADDRESS}`}
+              className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white py-3 text-center text-sm font-bold text-gray-900"
+              onClick={() => setIsOpen(false)}
+            >
+              <Mail className="h-4 w-4" aria-hidden="true" />
+              {EMAIL_ADDRESS}
             </a>
           </nav>
         </div>
