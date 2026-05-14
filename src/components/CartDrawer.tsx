@@ -142,7 +142,7 @@ export default function CartDrawer() {
                   ) : (
                     <CreditCard className="h-5 w-5" />
                   )}
-                  {isCheckingOut ? 'Bezig...' : 'Afrekenen via Stripe'}
+                  {isCheckingOut ? 'Bezig...' : 'Direct afrekenen'}
                 </button>
                 <div className="mt-4 flex items-center justify-center gap-2 text-[10px] text-gray-400">
                   <ShieldCheck className="h-3 w-3 text-green-500" />
