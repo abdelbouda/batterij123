@@ -68,7 +68,7 @@ export default function Header() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Stuur een WhatsApp naar ${WHATSAPP_DISPLAY}`}
-            className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2 text-sm font-bold text-white shadow-sm transition-opacity hover:opacity-90"
+            className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-5 py-2 text-sm font-bold text-white shadow-sm transition-opacity hover:opacity-90"
           >
             <WhatsAppIcon className="h-4 w-4" />
             WhatsApp {WHATSAPP_DISPLAY}
@@ -125,7 +125,7 @@ export default function Header() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Stuur een WhatsApp naar ${WHATSAPP_DISPLAY}`}
-              className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#25D366] py-3 text-center text-sm font-bold text-white"
+              className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gray-900 py-3 text-center text-sm font-bold text-white"
               onClick={() => setIsOpen(false)}
             >
               <WhatsAppIcon className="h-4 w-4" />
