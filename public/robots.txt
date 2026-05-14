@@ -3,5 +3,6 @@ Allow: /
 Disallow: /admin
 Disallow: /api/
 Disallow: /success
+Disallow: /zoeken
 
 Sitemap: https://www.batterij123.nl/sitemap.xml
