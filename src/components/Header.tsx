@@ -3,6 +3,14 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { useCart } from '../context/CartContext';
+import WhatsAppIcon from './WhatsAppIcon';
+
+// Contactnummer voor WhatsApp CTA — internationaal formaat zonder + voor wa.me.
+const WHATSAPP_NUMBER = '31642008944';
+const WHATSAPP_DISPLAY = '06-42008944';
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+  'Hoi! Ik heb een vraag over een thuisbatterij van Batterij123.',
+)}`;
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,12 +63,16 @@ export default function Header() {
               </span>
             )}
           </button>
-          <Link
-            to="/contact"
-            className="rounded-full bg-gray-900 px-5 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Stuur een WhatsApp naar ${WHATSAPP_DISPLAY}`}
+            className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2 text-sm font-bold text-white shadow-sm transition-opacity hover:opacity-90"
           >
-            Offerte aanvragen
-          </Link>
+            <WhatsAppIcon className="h-4 w-4" />
+            WhatsApp {WHATSAPP_DISPLAY}
+          </a>
         </nav>
 
         {/* Mobile Menu Toggle */}
@@ -108,13 +120,17 @@ export default function Header() {
                 {item.name}
               </Link>
             ))}
-            <Link
-              to="/contact"
-              className="mt-2 w-full rounded-lg bg-gray-900 py-3 text-center text-sm font-medium text-white"
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Stuur een WhatsApp naar ${WHATSAPP_DISPLAY}`}
+              className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#25D366] py-3 text-center text-sm font-bold text-white"
               onClick={() => setIsOpen(false)}
             >
-              Offerte aanvragen
-            </Link>
+              <WhatsAppIcon className="h-4 w-4" />
+              WhatsApp {WHATSAPP_DISPLAY}
+            </a>
           </nav>
         </div>
       )}
