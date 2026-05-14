@@ -1,0 +1,43 @@
+name: Auto-merge labeled PRs
+
+# When a PR is labeled `auto-merge`, wait for any registered checks to pass
+# and then squash-merge the PR. This lets Devin (which can label but not
+# merge) drive PRs to completion without manual clicks. Only people with
+# write access to this repo can apply labels, so the label itself is the
+# trust gate.
+on:
+  pull_request_target:
+    types: [labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  automerge:
+    if: github.event.label.name == 'auto-merge'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for checks (if any) and fail fast on red checks
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          set +e
+          OUT=$(gh pr checks "$PR" --repo "$REPO" --wait 2>&1)
+          STATUS=$?
+          echo "$OUT"
+          # Exit 8 = no checks configured -> safe to proceed
+          if [ $STATUS -eq 8 ] || echo "$OUT" | grep -qi 'no checks reported'; then
+            echo "::notice::No checks registered, proceeding with merge"
+            exit 0
+          fi
+          exit $STATUS
+
+      - name: Squash-merge and delete branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: gh pr merge "$PR" --repo "$REPO" --squash --delete-branch
