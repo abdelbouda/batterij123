@@ -42,7 +42,7 @@ export default async function handler(req: any, res: any) {
       cancel_url: `${process.env.APP_URL || 'http://localhost:3000'}/cart`,
     });
 
-    res.status(200).json({ id: session.id });
+    res.status(200).json({ id: session.id, url: session.url });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

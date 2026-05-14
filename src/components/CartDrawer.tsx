@@ -1,28 +1,15 @@
 import { useCart } from '../context/CartContext';
 import { Trash2, Plus, Minus, ShoppingBag, X, CreditCard, ShieldCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { loadStripe } from '@stripe/stripe-js';
 import { useState } from 'react';
-
-const stripePromise = (import.meta as any).env.VITE_STRIPE_PUBLISHABLE_KEY 
-  ? loadStripe((import.meta as any).env.VITE_STRIPE_PUBLISHABLE_KEY)
-  : null;
 
 export default function CartDrawer() {
   const { cart, removeFromCart, updateQuantity, totalPrice, totalItems, isCartOpen, setIsCartOpen } = useCart();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   const handleCheckout = async () => {
-    if (!stripePromise) {
-      alert("Stripe is niet geconfigureerd. Voeg de VITE_STRIPE_PUBLISHABLE_KEY toe.");
-      return;
-    }
-
     setIsCheckingOut(true);
     try {
-      const stripe = await stripePromise;
-      if (!stripe) throw new Error("Stripe kon niet worden geladen.");
-
       const response = await fetch('/api/checkout', {
         method: 'POST',
         headers: {
@@ -37,14 +24,10 @@ export default function CartDrawer() {
       }
 
       const session = await response.json();
-
-      const result = await (stripe as any).redirectToCheckout({
-        sessionId: session.id,
-      });
-
-      if (result.error) {
-        throw new Error(result.error.message);
+      if (!session.url) {
+        throw new Error("Stripe checkout URL ontbreekt in de response.");
       }
+      window.location.assign(session.url);
     } catch (error: any) {
       console.error("Checkout error:", error);
       alert(error.message || "Er is een fout opgetreden tijdens het afrekenen.");
