@@ -1,0 +1,16 @@
+{
+  "name": "Batterij123",
+  "short_name": "Batterij123",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "theme_color": "#111827",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "lang": "nl-NL"
+}

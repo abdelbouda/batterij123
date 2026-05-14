@@ -43,12 +43,14 @@ export default function Header() {
             </Link>
           ))}
           <button
+            type="button"
             onClick={() => setIsCartOpen(true)}
+            aria-label={`Winkelwagen openen (${totalItems} ${totalItems === 1 ? 'product' : 'producten'})`}
             className="relative flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-900 transition-colors hover:bg-gray-200"
           >
-            <ShoppingCart className="h-5 w-5" />
+            <ShoppingCart className="h-5 w-5" aria-hidden="true" />
             {totalItems > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-gray-900 text-[10px] font-bold text-white">
+              <span aria-hidden="true" className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-gray-900 text-[10px] font-bold text-white">
                 {totalItems}
               </span>
             )}
@@ -64,28 +66,34 @@ export default function Header() {
         {/* Mobile Menu Toggle */}
         <div className="flex items-center gap-4 md:hidden">
           <button
+            type="button"
             onClick={() => setIsCartOpen(true)}
+            aria-label={`Winkelwagen openen (${totalItems} ${totalItems === 1 ? 'product' : 'producten'})`}
             className="relative flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-900"
           >
-            <ShoppingCart className="h-5 w-5" />
+            <ShoppingCart className="h-5 w-5" aria-hidden="true" />
             {totalItems > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-gray-900 text-[10px] font-bold text-white">
+              <span aria-hidden="true" className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-gray-900 text-[10px] font-bold text-white">
                 {totalItems}
               </span>
             )}
           </button>
           <button
+            type="button"
             className="flex h-10 w-10 items-center justify-center rounded-md"
+            aria-label={isOpen ? 'Menu sluiten' : 'Menu openen'}
+            aria-expanded={isOpen}
+            aria-controls="mobile-nav"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isOpen ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Nav */}
       {isOpen && (
-        <div className="border-b border-gray-200 bg-white p-4 md:hidden">
+        <div id="mobile-nav" className="border-b border-gray-200 bg-white p-4 md:hidden">
           <nav className="flex flex-col gap-4">
             {navItems.map((item) => (
               <Link

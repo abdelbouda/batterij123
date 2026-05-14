@@ -4,7 +4,10 @@ import { Filter, Search, SlidersHorizontal, X } from 'lucide-react';
 import Fuse from 'fuse.js';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
+import JsonLd from '../components/JsonLd';
 import { fetchProducts, type Product } from '../lib/products';
+import { usePageMeta } from '../lib/seo';
+import { breadcrumbSchema, productListSchema } from '../lib/structured-data';
 
 export default function Products() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -12,6 +15,13 @@ export default function Products() {
   const [batteries, setBatteries] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const searchRef = useRef<HTMLDivElement>(null);
+
+  usePageMeta({
+    title: 'Thuisbatterijen vergelijken | Top-10 plug & play 2026 | Batterij123',
+    description:
+      'Vergelijk de top-10 plug & play thuisbatterijen voor 2026: Marstek, HomeWizard, Zendure, EcoFlow, Anker, Sessy en meer. Live prijzen, reviews en directe checkout via Stripe.',
+    canonicalPath: '/producten',
+  });
 
   useEffect(() => {
     fetchProducts()
@@ -48,8 +58,18 @@ export default function Products() {
 
   if (loading) return <div className="flex justify-center py-24">Producten laden...</div>;
 
+  const listData = batteries.length > 0 ? productListSchema(batteries) : null;
+
   return (
     <div className="bg-white py-12">
+      <JsonLd
+        id="breadcrumb-producten"
+        data={breadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: 'Producten', path: '/producten' },
+        ])}
+      />
+      {listData && <JsonLd id="products-list" data={listData} />}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
@@ -61,9 +81,13 @@ export default function Products() {
           
           <div className="flex flex-wrap gap-4">
             <div className="relative flex-1 min-w-[240px]" ref={searchRef}>
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+              <label htmlFor="products-search" className="sr-only">
+                Zoek op model of merk
+              </label>
+              <Search aria-hidden="true" className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
               <input
-                type="text"
+                id="products-search"
+                type="search"
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
@@ -71,14 +95,17 @@ export default function Products() {
                 }}
                 onFocus={() => setShowSuggestions(true)}
                 placeholder="Zoek op model of merk..."
+                aria-label="Zoek op model of merk"
                 className="w-full rounded-full border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-10 text-sm focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900"
               />
               {searchQuery && (
                 <button 
+                  type="button"
                   onClick={() => setSearchQuery('')}
+                  aria-label="Zoekopdracht wissen"
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-4 w-4" aria-hidden="true" />
                 </button>
               )}
 
@@ -100,7 +127,15 @@ export default function Products() {
                           onClick={() => setShowSuggestions(false)}
                         >
                           <div className="h-10 w-10 shrink-0 overflow-hidden rounded-lg bg-gray-100">
-                            <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
+                            <img
+                              src={item.image}
+                              alt={`${item.name} suggestie`}
+                              width="40"
+                              height="40"
+                              loading="lazy"
+                              decoding="async"
+                              className="h-full w-full object-cover"
+                            />
                           </div>
                           <div>
                             <p className="text-sm font-bold text-gray-900">{item.name}</p>

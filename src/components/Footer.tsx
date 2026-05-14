@@ -49,17 +49,17 @@ export default function Footer() {
               beste keuze te maken voor uw energieopslag.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="text-gray-400 hover:text-gray-900 transition-colors">
-                <Twitter className="h-5 w-5" />
+              <a href="#" aria-label="Batterij123 op Twitter" className="text-gray-400 hover:text-gray-900 transition-colors">
+                <Twitter className="h-5 w-5" aria-hidden="true" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-gray-900 transition-colors">
-                <Facebook className="h-5 w-5" />
+              <a href="#" aria-label="Batterij123 op Facebook" className="text-gray-400 hover:text-gray-900 transition-colors">
+                <Facebook className="h-5 w-5" aria-hidden="true" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-gray-900 transition-colors">
-                <Instagram className="h-5 w-5" />
+              <a href="#" aria-label="Batterij123 op Instagram" className="text-gray-400 hover:text-gray-900 transition-colors">
+                <Instagram className="h-5 w-5" aria-hidden="true" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-gray-900 transition-colors">
-                <Linkedin className="h-5 w-5" />
+              <a href="#" aria-label="Batterij123 op LinkedIn" className="text-gray-400 hover:text-gray-900 transition-colors">
+                <Linkedin className="h-5 w-5" aria-hidden="true" />
               </a>
             </div>
           </div>

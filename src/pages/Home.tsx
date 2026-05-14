@@ -1,13 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'motion/react';
 import { Battery, CheckCircle2, ArrowRight, Zap, Shield, TrendingUp, Info } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import BatteryCard from '../components/BatteryCard';
+import JsonLd from '../components/JsonLd';
 import { fetchProducts, type Product } from '../lib/products';
+import { usePageMeta } from '../lib/seo';
+import {
+  organizationSchema,
+  websiteSchema,
+  productListSchema,
+} from '../lib/structured-data';
 
 export default function Home() {
   const [batteries, setBatteries] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+
+  usePageMeta({
+    title: 'Batterij123 | Vergelijk plug & play thuisbatterijen voor 2026',
+    description:
+      'Onafhankelijke vergelijker voor plug & play thuisbatterijen in Nederland. Vergelijk Marstek, HomeWizard, Zendure, EcoFlow, Anker en Sessy. Bespaar op uw energierekening na de afbouw van de salderingsregeling 2027.',
+    canonicalPath: '/',
+  });
 
   useEffect(() => {
     fetchProducts()
@@ -15,8 +29,16 @@ export default function Home() {
       .catch((err) => console.error('Failed to load products', err))
       .finally(() => setLoading(false));
   }, []);
+
+  const listData = useMemo(
+    () => (batteries.length > 0 ? productListSchema(batteries) : null),
+    [batteries],
+  );
   return (
     <div className="flex flex-col">
+      <JsonLd id="organization" data={organizationSchema()} />
+      <JsonLd id="website" data={websiteSchema()} />
+      {listData && <JsonLd id="itemlist" data={listData} />}
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-white py-20 lg:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -46,7 +68,7 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="mt-8 max-w-2xl text-lg leading-relaxed text-gray-500"
             >
-              Vergelijk de populairste thuisbatterijen van 2024. Onafhankelijk advies, reviews en de scherpste prijzen voor energieopslag in Nederland.
+              Vergelijk de populairste plug & play thuisbatterijen van 2026. Onafhankelijk advies, reviews en live prijzen voor energieopslag in Nederland — ideaal na de afbouw van de salderingsregeling.
             </motion.p>
             
             <motion.div
@@ -154,8 +176,8 @@ export default function Home() {
                     <CheckCircle2 className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-bold">Subsidies 2024</h4>
-                    <p className="text-sm text-gray-400">Ontdek welke financiële voordelen er momenteel zijn.</p>
+                    <h4 className="font-bold">Salderingsregeling 2027</h4>
+                    <p className="text-sm text-gray-400">Hoe verandert uw verdienmodel na de afbouw van saldering?</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -177,10 +199,13 @@ export default function Home() {
             </div>
             <div className="relative aspect-square overflow-hidden rounded-3xl bg-gray-800">
               <img
-                src="https://images.unsplash.com/photo-1509391366360-fe5bb58583bb?auto=format&fit=crop&q=80&w=1000"
-                alt="Zonnepanelen en energie"
+                src="/articles/afbouw-salderingsregeling-2027/cover.webp"
+                alt="Zonnepanelen op een Nederlandse rijtjeswoning"
+                width="1000"
+                height="1000"
+                loading="lazy"
+                decoding="async"
                 className="h-full w-full object-cover opacity-80"
-                referrerPolicy="no-referrer"
               />
             </div>
           </div>
