@@ -11,6 +11,7 @@ import Products from './pages/Products';
 import Education from './pages/Education';
 import ProductDetail from './pages/ProductDetail';
 import Admin from './pages/Admin';
+import Success from './pages/Success';
 import { CartProvider } from './context/CartContext';
 import CartDrawer from './components/CartDrawer';
 
@@ -28,7 +29,7 @@ export default function App() {
               <Route path="/producten/:id" element={<ProductDetail />} />
               <Route path="/educatie" element={<Education />} />
               <Route path="/admin" element={<Admin />} />
-              <Route path="/success" element={<div className="py-24 text-center text-gray-900 font-bold text-3xl">Bedankt voor uw bestelling!</div>} />
+              <Route path="/success" element={<Success />} />
               <Route path="/contact" element={<div className="py-24 text-center text-gray-500">Contactpagina komt binnenkort...</div>} />
             </Routes>
           </main>
