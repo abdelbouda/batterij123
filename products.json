@@ -1,14 +1,55 @@
 {
-  "source": "https://batterij123.vercel.app",
+  "source": "https://batterij123.nl",
+  "imageHost": "https://batterij123.vercel.app",
   "currency": "eur",
   "livemode": false,
-  "generatedAt": "2026-05-14T14:16:02.208Z",
+  "generatedAt": "2026-05-14T14:59:48.780Z",
   "products": [
     {
-      "slug": "homewizard-plug-in",
-      "name": "HomeWizard Plug-In",
+      "slug": "homewizard-p1-meter",
+      "name": "HomeWizard Wi-Fi P1 Meter",
       "brand": "HomeWizard",
-      "description": "Plug & Play thuisbatterij van HomeWizard met de beste app & P1-integratie (NL). 2,7 kWh, eenvoudig zelf te installeren in een stopcontact.",
+      "category": "accessory",
+      "description": "De HomeWizard Wi-Fi P1 Meter geeft je in één oogopslag inzicht in je stroomverbruik, teruglevering én gasverbruik. Klik de P1-dongle in de P1-poort van je slimme meter en zie via de gratis HomeWizard-app realtime hoeveel energie je opwekt en gebruikt. Onmisbaar voor dynamische tarieven, plug & play thuisbatterijen en zelfconsumptie-optimalisatie na het einde van de salderingsregeling.",
+      "features": [
+        "Realtime inzicht in stroom, teruglevering en gas",
+        "Plug & Play installatie via P1-poort (<1 minuut)",
+        "Werkt met alle Nederlandse slimme meters (SMR4 + SMR5)",
+        "Lokale API + officiële Home Assistant integratie",
+        "Open standaard voor Marstek, Zendure, Anker en EcoFlow",
+        "2 jaar fabrieksgarantie van HomeWizard"
+      ],
+      "priceEur": 24.95,
+      "images": [
+        "https://batterij123.vercel.app/products/homewizard-p1-meter/1.webp",
+        "https://batterij123.vercel.app/products/homewizard-p1-meter/2.webp",
+        "https://batterij123.vercel.app/products/homewizard-p1-meter/3.webp",
+        "https://batterij123.vercel.app/products/homewizard-p1-meter/4.webp"
+      ],
+      "productUrl": "https://batterij123.nl/producten/homewizard-p1-meter",
+      "stripe": {
+        "productId": "prod_UW2mi9xK9UxOcF",
+        "priceId": "price_1TX0jYGUaEk9vyiKL5U4kGnQ",
+        "paymentLinkId": "plink_1TX0jZGUaEk9vyiKklp7QInD",
+        "paymentLinkUrl": "https://buy.stripe.com/test_dRmaEX3WY0Bh1pX27o2Nq0C",
+        "livemode": false
+      }
+    },
+    {
+      "slug": "homewizard-plug-in",
+      "name": "HomeWizard Plug-In Battery 2,7 kWh",
+      "brand": "HomeWizard",
+      "category": "battery",
+      "description": "De HomeWizard Plug-In Battery is een 2,7 kWh plug & play thuisbatterij die je zelf in 5 minuten installeert. Sluit de stekker aan, koppel via de P1 Meter aan je slimme meter en bespaar direct op je energierekening. Werkt met dynamische stroomtarieven, ondersteunt zelfconsumptie en wordt aangestuurd via de meest gewaardeerde Nederlandse energie-app. Inclusief lokale API en native Home Assistant-integratie — ideaal voor wie zelf de regie wil houden.",
+      "features": [
+        "Plug & Play: in een stopcontact en klaar",
+        "2,69 kWh LiFePO₄ opslag, 6000+ laadcycli",
+        "Beste Nederlandse energie-app met P1-integratie",
+        "800 W in- en uitgangsvermogen",
+        "Lokale API + native Home Assistant integratie",
+        "Werkt zonder cloud-abonnement",
+        "2 jaar fabrieksgarantie"
+      ],
       "priceEur": 1295,
       "images": [
         "https://batterij123.vercel.app/products/homewizard-plug-in/1.webp",
@@ -16,42 +57,62 @@
         "https://batterij123.vercel.app/products/homewizard-plug-in/3.webp",
         "https://batterij123.vercel.app/products/homewizard-plug-in/4.webp"
       ],
-      "productUrl": "https://batterij123.vercel.app/producten/homewizard-plug-in",
+      "productUrl": "https://batterij123.nl/producten/homewizard-plug-in",
       "stripe": {
         "productId": "prod_UW27uT4UBWfE45",
-        "priceId": "price_1TX03IGUaEk9vyiKvMamYa5u",
-        "paymentLinkId": "plink_1TX03IGUaEk9vyiKqpMuLxap",
-        "paymentLinkUrl": "https://buy.stripe.com/test_4gMfZhalm2Jp7Ol13k2Nq06",
+        "priceId": "price_1TX0jaGUaEk9vyiKhFNBh1pH",
+        "paymentLinkId": "plink_1TX0jbGUaEk9vyiK5kXIlWkY",
+        "paymentLinkUrl": "https://buy.stripe.com/test_3cI7sLfFG2Jpc4B27o2Nq0D",
         "livemode": false
       }
     },
     {
       "slug": "marstek-venus-e3",
-      "name": "Marstek Venus E 3.0",
+      "name": "Marstek Venus E 3.0 — 5,12 kWh Plug & Charge thuisbatterij",
       "brand": "Marstek",
-      "description": "Plug & Charge thuisbatterij met de meeste capaciteit voor de prijs. 5,12 kWh LFP, AI-sturing en koppelbaar tot 30 kWh.",
-      "priceEur": 1550,
+      "category": "battery",
+      "description": "De Marstek Venus E 3.0 is dé plug & charge thuisbatterij met de meeste capaciteit voor je geld: 5,12 kWh LFP-opslag in één compacte unit, koppelbaar tot 30 kWh. Tot 2.500 W noodstroom via een speciale back-up poort, IP65 voor buiten en geschikt voor temperaturen tot -20 °C. AI-modus plant het laden op basis van dynamische stroomprijzen en leert van jouw verbruik. Met 10 jaar fabrieksgarantie de slimste keuze voor huishoudens die zich willen voorbereiden op het einde van de salderingsregeling in 2027.",
+      "features": [
+        "5,12 kWh LFP-opslag, koppelbaar tot 30 kWh",
+        "Plug & Charge: installatie in ca. 5 minuten",
+        "Tot 2.500 W back-up vermogen via noodstroompoort",
+        "AI-modus voor dynamische stroomtarieven",
+        "IP65, werking tot -20 °C, geschikt voor buiten",
+        "100% compatibel met bestaande zonnepanelen",
+        "10 jaar fabrieksgarantie"
+      ],
+      "priceEur": 1325,
       "images": [
         "https://batterij123.vercel.app/products/marstek-venus-e3/1.webp",
         "https://batterij123.vercel.app/products/marstek-venus-e3/2.webp",
         "https://batterij123.vercel.app/products/marstek-venus-e3/3.webp",
         "https://batterij123.vercel.app/products/marstek-venus-e3/4.webp"
       ],
-      "productUrl": "https://batterij123.vercel.app/producten/marstek-venus-e3",
+      "productUrl": "https://batterij123.nl/producten/marstek-venus-e3",
       "stripe": {
         "productId": "prod_UVkuQKByj2OWg2",
-        "priceId": "price_1TX03JGUaEk9vyiKa71Czed6",
-        "paymentLinkId": "plink_1TX03JGUaEk9vyiKIXA2TqFz",
-        "paymentLinkUrl": "https://buy.stripe.com/test_eVqfZhctu1Fl8SpbHY2Nq07",
+        "priceId": "price_1TX0jbGUaEk9vyiKoTjyj7s3",
+        "paymentLinkId": "plink_1TX0jcGUaEk9vyiKEndtSf7h",
+        "paymentLinkUrl": "https://buy.stripe.com/test_dRmdR91OQbfV1pX5jA2Nq0E",
         "livemode": false
       }
     },
     {
       "slug": "zendure-solarflow-2400-ac-plus",
-      "name": "Zendure SolarFlow 2400 AC+",
+      "name": "Zendure SolarFlow 2400 AC+ — 2,4 kWh plug-in thuisbatterij",
       "brand": "Zendure",
-      "description": "Beste allrounder met zonne-ingang. 2,4 kWh basis, uitbreidbaar tot 17,28 kWh, 2400W off-grid vermogen, 800W bidirectionele AC.",
-      "priceEur": 1400,
+      "category": "battery",
+      "description": "De Zendure SolarFlow 2400 AC+ is de beste allrounder met zonne-ingang: 2,4 kWh LFP-opslag, uitbreidbaar tot 17,28 kWh, 2400 W bidirectioneel AC en directe MPPT-zonne-ingang. Plug & play via een stopcontact, met ingebouwd brandonderdrukkingssysteem en IP65-behuizing voor buitenmontage. Bestuurbaar via de Zendure-app, geschikt voor dynamische tarieven en gekoppeld aan je P1 Meter voor maximale zelfconsumptie. 10 jaar fabrieksgarantie en een verwachte levensduur van 15 jaar.",
+      "features": [
+        "2,4 kWh basis, uitbreidbaar tot 17,28 kWh",
+        "Directe MPPT-zonne-ingang naast AC-laden",
+        "2400 W bidirectioneel AC, 3200 W off-grid",
+        "IP65 + ingebouwd brandonderdrukkingssysteem",
+        "P1-integratie voor zelfconsumptie en dyn. tarieven",
+        "Home Assistant + ZenStack-integratie",
+        "10 jaar fabrieksgarantie"
+      ],
+      "priceEur": 1059,
       "images": [
         "https://batterij123.vercel.app/products/zendure-solarflow-2400-ac-plus/1.webp",
         "https://batterij123.vercel.app/products/zendure-solarflow-2400-ac-plus/2.webp",
@@ -59,21 +120,32 @@
         "https://batterij123.vercel.app/products/zendure-solarflow-2400-ac-plus/4.webp",
         "https://batterij123.vercel.app/products/zendure-solarflow-2400-ac-plus/5.webp"
       ],
-      "productUrl": "https://batterij123.vercel.app/producten/zendure-solarflow-2400-ac-plus",
+      "productUrl": "https://batterij123.nl/producten/zendure-solarflow-2400-ac-plus",
       "stripe": {
         "productId": "prod_UW27IQzboS556u",
-        "priceId": "price_1TX03KGUaEk9vyiKT5UdeVbK",
-        "paymentLinkId": "plink_1TX03KGUaEk9vyiKoQOQKuG2",
-        "paymentLinkUrl": "https://buy.stripe.com/test_9B6aEXdxy2JpfgN6nE2Nq08",
+        "priceId": "price_1TX0jcGUaEk9vyiKBPn1mj3w",
+        "paymentLinkId": "plink_1TX0jdGUaEk9vyiKtLN5BHv2",
+        "paymentLinkUrl": "https://buy.stripe.com/test_eVq4gz65697Nc4B13k2Nq0F",
         "livemode": false
       }
     },
     {
       "slug": "anker-solix-solarbank-3-pro",
-      "name": "Anker SOLIX Solarbank 3 Pro",
+      "name": "Anker SOLIX Solarbank 3 E2700 Pro — 2,68 kWh plug-in thuisbatterij",
       "brand": "Anker SOLIX",
-      "description": "Snelste laadtijd & topkwaliteit bouw. AI-gestuurd plug-in opslagsysteem met 2,68 kWh per unit, uitbreidbaar tot 16 kWh, 3600W solar input.",
-      "priceEur": 1300,
+      "category": "battery",
+      "description": "De Anker SOLIX Solarbank 3 E2700 Pro combineert snelste laadtijd en topkwaliteit bouw met AI-aansturing en een UPS-functie (<20 ms overschakeling). 2,68 kWh per unit, uitbreidbaar tot 16 kWh, met 4 MPPT-trackers voor maximaal 3600 W zonne-input. IP65, ingebouwde accuverwarming en een operating range van -20 °C tot 55 °C maken hem geschikt voor buitenmontage. 1.200 W noodstroom houdt je essentiële apparatuur draaiende bij stroomuitval. 10 jaar fabrieksgarantie.",
+      "features": [
+        "2,68 kWh per unit, uitbreidbaar tot 16 kWh",
+        "4 MPPT-trackers tot 3.600 W zonne-input",
+        "UPS-functie: <20 ms overschakeling bij stroomuitval",
+        "1.200 W noodstroom via off-grid-poort",
+        "IP65 + ingebouwde accuverwarming (-20 °C)",
+        "AI-modus en P1-integratie voor dyn. tarieven",
+        "Native Home Assistant integratie",
+        "10 jaar fabrieksgarantie"
+      ],
+      "priceEur": 1199,
       "images": [
         "https://batterij123.vercel.app/products/anker-solix-solarbank-3-pro/1.webp",
         "https://batterij123.vercel.app/products/anker-solix-solarbank-3-pro/2.webp",
@@ -81,21 +153,31 @@
         "https://batterij123.vercel.app/products/anker-solix-solarbank-3-pro/4.webp",
         "https://batterij123.vercel.app/products/anker-solix-solarbank-3-pro/5.webp"
       ],
-      "productUrl": "https://batterij123.vercel.app/producten/anker-solix-solarbank-3-pro",
+      "productUrl": "https://batterij123.nl/producten/anker-solix-solarbank-3-pro",
       "stripe": {
         "productId": "prod_UW27dqLAWdlHtd",
-        "priceId": "price_1TX03LGUaEk9vyiKOObjqRpR",
-        "paymentLinkId": "plink_1TX03LGUaEk9vyiKmz5KB6nq",
-        "paymentLinkUrl": "https://buy.stripe.com/test_28EfZhalmes73y5eUa2Nq09",
+        "priceId": "price_1TX0jeGUaEk9vyiKgyBcShBo",
+        "paymentLinkId": "plink_1TX0jfGUaEk9vyiKeyjEak8V",
+        "paymentLinkUrl": "https://buy.stripe.com/test_bJe14n1OQ6ZF2u1dQ62Nq0G",
         "livemode": false
       }
     },
     {
       "slug": "ecoflow-stream-ac-pro",
-      "name": "EcoFlow STREAM AC Pro",
+      "name": "EcoFlow STREAM AC Pro — 1,92 kWh plug & play thuisbatterij",
       "brand": "EcoFlow",
-      "description": "Beste ecosysteem met portable power. 1,92 kWh plug-and-play thuisbatterij, uitbreidbaar tot 11,52 kWh, 1200W terugleveren via stopcontact.",
-      "priceEur": 1350,
+      "category": "battery",
+      "description": "De EcoFlow STREAM AC Pro maakt deel uit van het uitgebreidste plug & play ecosysteem op de markt. 1,92 kWh LFP-opslag, 1.200 W bi-directioneel via een gewoon stopcontact en koppelbaar tot 11,52 kWh. Geen ingewikkelde installatie: in het stopcontact en aansturen via de EcoFlow-app. Combineerbaar met de STREAM Ultra, STREAM Max, microsolar omvormers en draagbare powerstations van EcoFlow. Ideaal voor wie z'n stekkerbatterij later wil uitbreiden of mobiel wil maken.",
+      "features": [
+        "1,92 kWh LFP, uitbreidbaar tot 11,52 kWh",
+        "1.200 W bidirectioneel via een stopcontact",
+        "Onderdeel van het EcoFlow STREAM-ecosysteem",
+        "AI-monitoring en sturing via EcoFlow-app",
+        "100% compatibel met micro-omvormers",
+        "IP65, geschikt voor binnen en buiten",
+        "10 jaar fabrieksgarantie"
+      ],
+      "priceEur": 792,
       "images": [
         "https://batterij123.vercel.app/products/ecoflow-stream-ac-pro/1.webp",
         "https://batterij123.vercel.app/products/ecoflow-stream-ac-pro/2.webp",
@@ -103,21 +185,31 @@
         "https://batterij123.vercel.app/products/ecoflow-stream-ac-pro/4.webp",
         "https://batterij123.vercel.app/products/ecoflow-stream-ac-pro/5.webp"
       ],
-      "productUrl": "https://batterij123.vercel.app/producten/ecoflow-stream-ac-pro",
+      "productUrl": "https://batterij123.nl/producten/ecoflow-stream-ac-pro",
       "stripe": {
         "productId": "prod_UW27lpG4NvL7Dt",
-        "priceId": "price_1TX03MGUaEk9vyiKmQoTREh6",
-        "paymentLinkId": "plink_1TX03MGUaEk9vyiKPsGrE5lE",
-        "paymentLinkUrl": "https://buy.stripe.com/test_4gMcN579a3Nt6Kh5jA2Nq0a",
+        "priceId": "price_1TX0jfGUaEk9vyiK2wTSjfuD",
+        "paymentLinkId": "plink_1TX0jhGUaEk9vyiKS84bWMbz",
+        "paymentLinkUrl": "https://buy.stripe.com/test_9B6fZhgJK97Nc4B6nE2Nq0H",
         "livemode": false
       }
     },
     {
       "slug": "zinvolt-power",
-      "name": "ZinVolt Power",
+      "name": "ZinVolt Power — 1 kWh draagbare plug & play thuisbatterij",
       "brand": "ZinVolt",
-      "description": "Lichtgewicht & zeer mobiel. Draagbare plug & play thuisbatterij van 1 kWh, uitbreidbaar tot 6 kWh, ook off-grid bruikbaar.",
-      "priceEur": 850,
+      "category": "battery",
+      "description": "De ZinVolt Power is dé lichtgewicht draagbare plug & play thuisbatterij. 1 kWh ingebouwd in de Power-unit, uitbreidbaar tot 6 kWh met ZinVolt Mate modules. Drie stopcontacten, twee PV-ingangen tot 1.200 W en USB-C 100 W bidirectioneel maken hem net zo geschikt voor je woonkamer als voor de camping of een tuinhuis. Fluisterstil (<35 dB), 6.000 laadcycli en aansturing via de ZinVolt-app of P1-dongle. Een complete energie-oplossing met 3 jaar garantie op de Power en 10 jaar garantie op de Mate.",
+      "features": [
+        "1 kWh ingebouwd, uitbreidbaar tot 6 kWh met ZinVolt Mate",
+        "3 stopcontacten + 2 PV-ingangen (tot 1.200 W zonne)",
+        "USB-C 100 W bidirectioneel + 2× USB-A 18 W",
+        "Off-grid bruikbaar (camping, tuinhuis, schuur)",
+        "Fluisterstil: <35 dB tijdens werking",
+        "WiFi-aansturing via ZinVolt-app",
+        "3 jaar garantie Power, 10 jaar garantie Mate"
+      ],
+      "priceEur": 1199,
       "images": [
         "https://batterij123.vercel.app/products/zinvolt-power/1.webp",
         "https://batterij123.vercel.app/products/zinvolt-power/2.webp",
@@ -125,21 +217,32 @@
         "https://batterij123.vercel.app/products/zinvolt-power/4.webp",
         "https://batterij123.vercel.app/products/zinvolt-power/5.webp"
       ],
-      "productUrl": "https://batterij123.vercel.app/producten/zinvolt-power",
+      "productUrl": "https://batterij123.nl/producten/zinvolt-power",
       "stripe": {
         "productId": "prod_UW27WN2gZakpYH",
-        "priceId": "price_1TX03NGUaEk9vyiK0L9cusEX",
-        "paymentLinkId": "plink_1TX03NGUaEk9vyiKXLvDjXdO",
-        "paymentLinkUrl": "https://buy.stripe.com/test_fZufZh6564Rx4C93bs2Nq0b",
+        "priceId": "price_1TX0jhGUaEk9vyiKlTs1dBuK",
+        "paymentLinkId": "plink_1TX0jiGUaEk9vyiKg2PYW9kf",
+        "paymentLinkUrl": "https://buy.stripe.com/test_cNi7sLdxy0Bhc4B8vM2Nq0I",
         "livemode": false
       }
     },
     {
       "slug": "sessy",
-      "name": "Sessy (Stekkermodel)",
+      "name": "Sessy 5 kWh — Nederlands ontwikkelde thuisbatterij",
       "brand": "Sessy",
-      "description": "Hoogwaardig NL product, slimme sturing. 5,0 kWh bruikbare capaciteit, ingebouwde EMS, ontwikkeld en geassembleerd in Nederland.",
-      "priceEur": 3600,
+      "category": "battery",
+      "description": "De Sessy is een hoogwaardig Nederlands thuisbatterijproduct, ontwikkeld en geassembleerd in Andelst. 5 kWh bruikbare LFP-capaciteit per unit, koppelbaar tot 10 kWh of meer. Geen abonnementskosten, geen hybride omvormer nodig — Sessy past op elk bestaand PV-systeem. Ingebouwde slimme software, P1-dongle inbegrepen en volledige controle via de Sessy-app of webportal. Werkt op 1-fase én 3-fase aansluitingen en is toekomstbestendig met regelmatige software-updates.",
+      "features": [
+        "5 kWh bruikbare LFP-opslag, koppelbaar tot 10 kWh",
+        "In Nederland ontworpen, ontwikkeld en geassembleerd",
+        "Geen abonnementskosten — geen hybride omvormer nodig",
+        "P1-dongle voor real-time inzicht inbegrepen",
+        "Geschikt voor 1-fase én 3-fase aansluiting",
+        "Slimme aansturing via Sessy-app en webportal",
+        "Compatibel met SMA, SolarEdge, Enphase en Huawei",
+        "10 jaar fabrieksgarantie"
+      ],
+      "priceEur": 3650,
       "images": [
         "https://batterij123.vercel.app/products/sessy/1.webp",
         "https://batterij123.vercel.app/products/sessy/2.webp",
@@ -147,21 +250,32 @@
         "https://batterij123.vercel.app/products/sessy/4.webp",
         "https://batterij123.vercel.app/products/sessy/5.webp"
       ],
-      "productUrl": "https://batterij123.vercel.app/producten/sessy",
+      "productUrl": "https://batterij123.nl/producten/sessy",
       "stripe": {
         "productId": "prod_UW27OQ0e8KDRqL",
-        "priceId": "price_1TX03OGUaEk9vyiKbEpk8RWL",
-        "paymentLinkId": "plink_1TX03OGUaEk9vyiKcsukpFrx",
-        "paymentLinkUrl": "https://buy.stripe.com/test_4gM5kD1OQ6ZF0lT8vM2Nq0c",
+        "priceId": "price_1TX0jjGUaEk9vyiKbVQZO5eU",
+        "paymentLinkId": "plink_1TX0jkGUaEk9vyiK2ZQQ5npl",
+        "paymentLinkUrl": "https://buy.stripe.com/test_fZufZh8de1Flc4Bh2i2Nq0J",
         "livemode": false
       }
     },
     {
       "slug": "lunergy-hub-2400-ac",
-      "name": "Lunergy Hub 2400 AC",
+      "name": "Lunergy Hub 2400 AC — 5,22 kWh modulair plug & play systeem",
       "brand": "Lunergy",
-      "description": "Stilste werking dankzij actieve koeling. 5,22 kWh modulair plug-in systeem met 2400W vermogen, uitbreidbaar tot 15,66 kWh per unit.",
-      "priceEur": 2200,
+      "category": "battery",
+      "description": "De Lunergy Hub 2400 AC is de stilste plug & play thuisbatterij dankzij actieve koeling die pas inschakelt boven 60 °C. 5,22 kWh BP5200-module per unit, uitbreidbaar tot maar liefst 78,3 kWh. 2.400 W laad- en ontlaadvermogen, 4.800 W piek noodstroom en P1-meter standaard inbegrepen. IP65, beschikbaar als plug-in of vaste installatie. Met 10 jaar fabrieksgarantie en native Home Assistant-integratie de modulairste keuze voor wie écht groot wil schalen.",
+      "features": [
+        "5,22 kWh per unit, modulair uitbreidbaar tot 78,3 kWh",
+        "2.400 W laad- en ontlaadvermogen",
+        "Stilste werking dankzij actieve koeling (>60 °C)",
+        "4.800 W piek-noodstroom bij stroomuitval",
+        "Gratis P1-meter inbegrepen bij de omvormer",
+        "IP65, plug-in of vast aansluitbaar",
+        "Native Home Assistant integratie",
+        "10 jaar fabrieksgarantie"
+      ],
+      "priceEur": 1699,
       "images": [
         "https://batterij123.vercel.app/products/lunergy-hub-2400-ac/1.webp",
         "https://batterij123.vercel.app/products/lunergy-hub-2400-ac/2.webp",
@@ -169,21 +283,32 @@
         "https://batterij123.vercel.app/products/lunergy-hub-2400-ac/4.webp",
         "https://batterij123.vercel.app/products/lunergy-hub-2400-ac/5.webp"
       ],
-      "productUrl": "https://batterij123.vercel.app/producten/lunergy-hub-2400-ac",
+      "productUrl": "https://batterij123.nl/producten/lunergy-hub-2400-ac",
       "stripe": {
         "productId": "prod_UW27bycAnmf0xM",
-        "priceId": "price_1TX03PGUaEk9vyiKHtVReraA",
-        "paymentLinkId": "plink_1TX03QGUaEk9vyiK5GeaBOfX",
-        "paymentLinkUrl": "https://buy.stripe.com/test_3cIfZheBCfwb2u1fYe2Nq0d",
+        "priceId": "price_1TX0jkGUaEk9vyiKXLGjJXTs",
+        "paymentLinkId": "plink_1TX0jlGUaEk9vyiKoR4LLzNh",
+        "paymentLinkUrl": "https://buy.stripe.com/test_eVqcN53WYdo3fgN6nE2Nq0K",
         "livemode": false
       }
     },
     {
       "slug": "indevolt-solidflex-2000",
-      "name": "Indevolt SolidFlex 2000",
+      "name": "Indevolt SolidFlex 2000 — Semi-solid state plug & play thuisbatterij",
       "brand": "Indevolt",
-      "description": "Lange levensduur met 8000+ cycli en Red Dot Design Award winnaar 2025. 1,79 kWh, robuuste solid-state geïnspireerde opbouw.",
-      "priceEur": 1200,
+      "category": "battery",
+      "description": "De Indevolt SolidFlex 2000 zet de standaard met Semi-Solid State LiFePO₄ batterijcellen: veiliger, dichter en langer houdbaar dan klassieke LFP. 1,79 kWh per unit, parallelliseerbaar tot maximaal 32 kWh, 2.400 W off-grid vermogen en automatische overschakeling binnen 10 ms bij stroomuitval. 4 MPPT-trackers tot 2.400 W zonne-ingang, IP65 voor buiten, plug & play met AC-koppeling. Red Dot Design Award winnaar 2025 met 10 jaar fabrieksgarantie.",
+      "features": [
+        "Semi-solid state LiFePO₄ cellen: extra veilig en duurzaam",
+        "1,79 kWh, parallelliseerbaar tot 32 kWh totaal",
+        "4 MPPT-trackers, tot 2.400 W zonne-input",
+        "2.400 W off-grid vermogen, omschakeling <10 ms",
+        "IP65, werking van -20 °C tot 55 °C",
+        "Red Dot Design Award winnaar 2025",
+        "Native Home Assistant integratie (officieel)",
+        "10 jaar fabrieksgarantie"
+      ],
+      "priceEur": 899,
       "images": [
         "https://batterij123.vercel.app/products/indevolt-solidflex-2000/1.webp",
         "https://batterij123.vercel.app/products/indevolt-solidflex-2000/2.webp",
@@ -191,21 +316,32 @@
         "https://batterij123.vercel.app/products/indevolt-solidflex-2000/4.webp",
         "https://batterij123.vercel.app/products/indevolt-solidflex-2000/5.webp"
       ],
-      "productUrl": "https://batterij123.vercel.app/producten/indevolt-solidflex-2000",
+      "productUrl": "https://batterij123.nl/producten/indevolt-solidflex-2000",
       "stripe": {
         "productId": "prod_UVkuTPj6PxjBWt",
-        "priceId": "price_1TX03QGUaEk9vyiKxoJkHENQ",
-        "paymentLinkId": "plink_1TX03RGUaEk9vyiKrvftlXAT",
-        "paymentLinkUrl": "https://buy.stripe.com/test_3cI4gzfFG3NtecJ6nE2Nq0e",
+        "priceId": "price_1TX0jmGUaEk9vyiKwf0fmkmi",
+        "paymentLinkId": "plink_1TX0jnGUaEk9vyiKMyCW7jew",
+        "paymentLinkUrl": "https://buy.stripe.com/test_bJe4gz512do3c4BfYe2Nq0L",
         "livemode": false
       }
     },
     {
       "slug": "ecoflow-stream-ultra",
-      "name": "EcoFlow STREAM Ultra",
+      "name": "EcoFlow STREAM Ultra — 1,92 kWh plug-in thuisbatterij met 4× MPPT",
       "brand": "EcoFlow",
-      "description": "Vlaggenschip van de STREAM-serie. 3,84 kWh thuisbatterij met directe zonne-ingang, AI-app en koppelbaar binnen het EcoFlow-ecosysteem.",
-      "priceEur": 2500,
+      "category": "battery",
+      "description": "De EcoFlow STREAM Ultra is het vlaggenschip van de STREAM-serie: 1,92 kWh LFP-opslag, 1.200 W vermogen (2.300 W piek), 4 MPPT-trackers voor maximaal 1.050 W directe zonne-input. Plug & play via een gewoon stopcontact, koppelbaar met andere STREAM-units tot meerdere kWh. IP65 voor buitenmontage, bidirectioneel met 800 W teruglevering en aangestuurd via de EcoFlow-app. Inclusief AI-modus voor dynamische tarieven en native Home Assistant integratie via MQTT. 10 jaar fabrieksgarantie.",
+      "features": [
+        "1,92 kWh LFP, koppelbaar in STREAM-ecosysteem",
+        "4 MPPT-trackers, tot 1.050 W directe zonne-input",
+        "1.200 W vermogen, 2.300 W piek",
+        "800 W teruglevering naar het net",
+        "IP65, geschikt voor balkon, tuin of buitenmuur",
+        "AI-app voor dynamische stroomtarieven",
+        "Native Home Assistant via MQTT",
+        "10 jaar fabrieksgarantie"
+      ],
+      "priceEur": 1598,
       "images": [
         "https://batterij123.vercel.app/products/ecoflow-stream-ultra/1.webp",
         "https://batterij123.vercel.app/products/ecoflow-stream-ultra/2.webp",
@@ -213,12 +349,12 @@
         "https://batterij123.vercel.app/products/ecoflow-stream-ultra/4.webp",
         "https://batterij123.vercel.app/products/ecoflow-stream-ultra/5.webp"
       ],
-      "productUrl": "https://batterij123.vercel.app/producten/ecoflow-stream-ultra",
+      "productUrl": "https://batterij123.nl/producten/ecoflow-stream-ultra",
       "stripe": {
         "productId": "prod_UVkubpz5SzG03V",
-        "priceId": "price_1TX03RGUaEk9vyiKPXAetzAH",
-        "paymentLinkId": "plink_1TX03SGUaEk9vyiKoJc8NLrr",
-        "paymentLinkUrl": "https://buy.stripe.com/test_5kQ9ATbpqcjZ9WteUa2Nq0f",
+        "priceId": "price_1TX0jnGUaEk9vyiKL94HBTLZ",
+        "paymentLinkId": "plink_1TX0joGUaEk9vyiKe8kaYXLH",
+        "paymentLinkUrl": "https://buy.stripe.com/test_cNi7sLalmcjZ7Ol13k2Nq0M",
         "livemode": false
       }
     }
