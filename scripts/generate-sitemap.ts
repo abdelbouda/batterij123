@@ -24,6 +24,7 @@ const urls: Url[] = [
   { loc: '/', changefreq: 'weekly', priority: 1.0, lastmod: today },
   { loc: '/producten', changefreq: 'daily', priority: 0.9, lastmod: today },
   { loc: '/educatie', changefreq: 'weekly', priority: 0.8, lastmod: today },
+  { loc: '/contact', changefreq: 'monthly', priority: 0.7, lastmod: today },
 ];
 
 // Articles
