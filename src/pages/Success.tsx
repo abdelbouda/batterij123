@@ -1,5 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import { CheckCircle2, Mail, Package } from 'lucide-react';
+import { usePageMeta } from '../lib/seo';
 
 /**
  * Bedankt-pagina waar Stripe Checkout naartoe redirect na een geslaagde
@@ -7,6 +8,12 @@ import { CheckCircle2, Mail, Package } from 'lucide-react';
  * `?payment_intent=...` mee — we tonen de laatste 8 tekens als referentie.
  */
 export default function Success() {
+  usePageMeta({
+    title: 'Bedankt voor uw bestelling | Batterij123',
+    description: 'Uw betaling is succesvol verwerkt. U ontvangt binnen enkele minuten een bevestiging per e-mail.',
+    canonicalPath: '/success',
+  });
+
   const [params] = useSearchParams();
   const ref =
     params.get('session_id') ??

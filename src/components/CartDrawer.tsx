@@ -1,6 +1,6 @@
 import { useCart } from '../context/CartContext';
 import { Trash2, Plus, Minus, ShoppingBag, X, CreditCard, ShieldCheck } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { loadStripe } from '@stripe/stripe-js';
 import { useState } from 'react';
 

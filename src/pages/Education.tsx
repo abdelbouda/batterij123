@@ -4,6 +4,9 @@ import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
 import { articles } from '../data/articles';
+import JsonLd from '../components/JsonLd';
+import { usePageMeta } from '../lib/seo';
+import { breadcrumbSchema, faqSchema } from '../lib/structured-data';
 
 const faqs = [
   {
@@ -86,6 +89,13 @@ export default function Education() {
   const [activeCategory, setActiveCategory] = useState<(typeof categories)[number]>('Alle');
   const [query, setQuery] = useState('');
 
+  usePageMeta({
+    title: 'Kennisbank thuisbatterijen | Salderingsregeling 2027 | Batterij123',
+    description:
+      'Onafhankelijke artikelen over thuisbatterijen, de afbouw van de salderingsregeling in 2027, dynamische energietarieven, LFP-veiligheid en smart grid trading.',
+    canonicalPath: '/educatie',
+  });
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return articles.filter((a) => {
@@ -104,6 +114,14 @@ export default function Education() {
 
   return (
     <div className="bg-white py-12">
+      <JsonLd
+        id="breadcrumb-educatie"
+        data={breadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: 'Kennisbank', path: '/educatie' },
+        ])}
+      />
+      <JsonLd id="faq-educatie" data={faqSchema(faqs)} />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-16 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
@@ -117,12 +135,17 @@ export default function Education() {
           </div>
 
           <div className="relative w-full max-w-xs">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+            <label htmlFor="education-search" className="sr-only">
+              Zoek in artikelen
+            </label>
+            <Search aria-hidden="true" className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
             <input
-              type="text"
+              id="education-search"
+              type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Zoek in artikelen..."
+              aria-label="Zoek in artikelen"
               className="w-full rounded-full border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-4 text-sm focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900"
             />
           </div>
@@ -163,8 +186,12 @@ export default function Education() {
                     <img
                       src={featured.image}
                       alt={featured.imageAlt}
+                      width="800"
+                      height="450"
+                      fetchPriority="high"
+                      loading="eager"
+                      decoding="async"
                       className="h-full w-full object-cover"
-                      referrerPolicy="no-referrer"
                     />
                   </div>
                   <div className="flex flex-col justify-center p-8 md:p-12">
@@ -207,8 +234,11 @@ export default function Education() {
                       <img
                         src={article.image}
                         alt={article.imageAlt}
+                        width="640"
+                        height="400"
+                        loading="lazy"
+                        decoding="async"
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        referrerPolicy="no-referrer"
                       />
                     </div>
                     <div className="flex flex-col gap-3">

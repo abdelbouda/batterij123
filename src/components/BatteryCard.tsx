@@ -19,9 +19,12 @@ export default function BatteryCard({ battery }: BatteryCardProps) {
       <Link to={`/producten/${battery.id}`} className="relative aspect-[4/3] overflow-hidden bg-gray-100">
         <img
           src={battery.image}
-          alt={battery.name}
+          alt={`${battery.name} thuisbatterij — ${battery.brand}`}
+          width="600"
+          height="450"
+          loading="lazy"
+          decoding="async"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          referrerPolicy="no-referrer"
         />
         <div className="absolute top-4 left-4">
           <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gray-900 backdrop-blur-sm">
@@ -82,11 +85,13 @@ export default function BatteryCard({ battery }: BatteryCardProps) {
             Bekijk Details
           </Link>
           <button
+            type="button"
             onClick={() => addToCart(battery)}
+            aria-label={`${battery.name} aan winkelwagen toevoegen`}
             className="flex h-11 w-11 items-center justify-center rounded-xl bg-gray-900 text-white transition-opacity hover:opacity-90"
             title="In winkelwagen"
           >
-            <ShoppingCart className="h-5 w-5" />
+            <ShoppingCart className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
       </div>

@@ -2,16 +2,23 @@ import { ArrowLeft, Clock, User, Tag, CheckCircle2 } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { articles, getArticleBySlug } from '../data/articles';
+import JsonLd from '../components/JsonLd';
+import { usePageMeta, SITE_URL } from '../lib/seo';
+import { articleSchema, breadcrumbSchema } from '../lib/structured-data';
 
 export default function EducationDetail() {
   const { slug } = useParams<{ slug: string }>();
   const article = slug ? getArticleBySlug(slug) : undefined;
 
-  useEffect(() => {
-    if (article) {
-      document.title = `${article.title} – Batterij123`;
-    }
-  }, [article]);
+  usePageMeta({
+    title: article
+      ? `${article.title} | Batterij123 kennisbank`
+      : 'Artikel niet gevonden | Batterij123',
+    description: article ? article.excerpt : 'Het artikel dat u zoekt bestaat niet (meer).',
+    canonicalPath: article ? `/educatie/${article.slug}` : '/educatie',
+    ogImage: article ? `${SITE_URL}${article.image}` : undefined,
+    ogType: 'article',
+  });
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
@@ -40,6 +47,15 @@ export default function EducationDetail() {
 
   return (
     <article className="bg-white py-12">
+      <JsonLd id={`article-${article.slug}`} data={articleSchema(article)} />
+      <JsonLd
+        id={`breadcrumb-article-${article.slug}`}
+        data={breadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: 'Kennisbank', path: '/educatie' },
+          { name: article.title, path: `/educatie/${article.slug}` },
+        ])}
+      />
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <Link
           to="/educatie"
@@ -73,8 +89,12 @@ export default function EducationDetail() {
           <img
             src={article.image}
             alt={article.imageAlt}
+            width="1280"
+            height="720"
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
             className="aspect-[16/9] w-full object-cover"
-            referrerPolicy="no-referrer"
           />
           <figcaption className="mt-3 text-center text-xs text-gray-400">
             {article.imageCredit}

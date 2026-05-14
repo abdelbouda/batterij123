@@ -3,7 +3,10 @@ import { useState, useEffect } from 'react';
 import { CheckCircle2, ArrowLeft, Star, Zap, Shield, ShoppingCart, CreditCard } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useCart } from '../context/CartContext';
+import JsonLd from '../components/JsonLd';
 import { fetchProducts, type Product } from '../lib/products';
+import { usePageMeta } from '../lib/seo';
+import { breadcrumbSchema, productSchema } from '../lib/structured-data';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -22,6 +25,18 @@ export default function ProductDetail() {
       .finally(() => setLoading(false));
   }, [id]);
 
+  usePageMeta({
+    title: battery
+      ? `${battery.name} kopen | €${battery.price} | Batterij123`
+      : 'Product | Batterij123',
+    description: battery
+      ? `${battery.name} — ${battery.capacity || 'plug & play'} thuisbatterij van ${battery.brand}. ${battery.description.slice(0, 110)}… Direct afrekenen via Stripe.`
+      : 'Bekijk de details van deze thuisbatterij op Batterij123.',
+    canonicalPath: id ? `/producten/${id}` : '/producten',
+    ogImage: battery?.image,
+    ogType: 'product',
+  });
+
   if (loading) return <div className="flex justify-center py-24">Product laden...</div>;
 
   if (!battery) {
@@ -38,6 +53,15 @@ export default function ProductDetail() {
 
   return (
     <div className="bg-white pb-24">
+      <JsonLd id={`product-${battery.id}`} data={productSchema(battery)} />
+      <JsonLd
+        id={`breadcrumb-product-${battery.id}`}
+        data={breadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: 'Producten', path: '/producten' },
+          { name: battery.name, path: `/producten/${battery.id}` },
+        ])}
+      />
       {/* Breadcrumbs & Back Button */}
       <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
         <Link to="/producten" className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors">
@@ -57,9 +81,13 @@ export default function ProductDetail() {
             <div className="aspect-[4/3] overflow-hidden rounded-3xl bg-gray-100 shadow-sm">
               <img
                 src={battery.image}
-                alt={battery.name}
+                alt={`${battery.name} thuisbatterij van ${battery.brand}`}
+                width="1200"
+                height="900"
+                fetchPriority="high"
+                loading="eager"
+                decoding="async"
                 className="h-full w-full object-cover"
-                referrerPolicy="no-referrer"
               />
             </div>
           </motion.div>
