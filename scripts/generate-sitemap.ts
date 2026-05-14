@@ -14,17 +14,35 @@ import { articles } from '../src/data/articles.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const projectRoot = path.join(__dirname, '..');
 
 const SITE = 'https://www.batterij123.nl';
-const today = new Date().toISOString().split('T')[0];
 
 type Url = { loc: string; changefreq?: string; priority?: number; lastmod?: string };
 
+function toDateOnly(value: Date) {
+  return value.toISOString().split('T')[0];
+}
+
+function getFileLastMod(relativePath: string, fallback?: string) {
+  try {
+    const absolutePath = path.join(projectRoot, relativePath);
+    return toDateOnly(fs.statSync(absolutePath).mtime);
+  } catch {
+    return fallback;
+  }
+}
+
+const homeLastMod = getFileLastMod(path.join('src', 'pages', 'Home.tsx'));
+const productsLastMod = getFileLastMod(path.join('products.json'), homeLastMod);
+const educationLastMod = getFileLastMod(path.join('src', 'data', 'articles.ts'), homeLastMod);
+const contactLastMod = getFileLastMod(path.join('src', 'pages', 'Contact.tsx'), homeLastMod);
+
 const urls: Url[] = [
-  { loc: '/', changefreq: 'weekly', priority: 1.0, lastmod: today },
-  { loc: '/producten', changefreq: 'daily', priority: 0.9, lastmod: today },
-  { loc: '/educatie', changefreq: 'weekly', priority: 0.8, lastmod: today },
-  { loc: '/contact', changefreq: 'monthly', priority: 0.7, lastmod: today },
+  { loc: '/', changefreq: 'weekly', priority: 1.0, lastmod: homeLastMod },
+  { loc: '/producten', changefreq: 'daily', priority: 0.9, lastmod: productsLastMod },
+  { loc: '/educatie', changefreq: 'weekly', priority: 0.8, lastmod: educationLastMod },
+  { loc: '/contact', changefreq: 'monthly', priority: 0.7, lastmod: contactLastMod },
 ];
 
 // Articles
@@ -33,13 +51,13 @@ for (const a of articles) {
     loc: `/educatie/${a.slug}`,
     changefreq: 'monthly',
     priority: 0.7,
-    lastmod: today,
+    lastmod: educationLastMod,
   });
 }
 
 // Stripe products from generated JSON
 try {
-  const productsPath = path.join(__dirname, '..', 'products.json');
+  const productsPath = path.join(projectRoot, 'products.json');
   if (fs.existsSync(productsPath)) {
     const raw = JSON.parse(fs.readFileSync(productsPath, 'utf-8'));
     const list: { id?: string; slug?: string }[] = Array.isArray(raw)
@@ -54,7 +72,7 @@ try {
           loc: `/producten/${slug}`,
           changefreq: 'weekly',
           priority: 0.8,
-          lastmod: today,
+          lastmod: productsLastMod,
         });
       }
     }
@@ -79,6 +97,6 @@ const xml =
     .join('\n') +
   `\n</urlset>\n`;
 
-const outPath = path.join(__dirname, '..', 'public', 'sitemap.xml');
+const outPath = path.join(projectRoot, 'public', 'sitemap.xml');
 fs.writeFileSync(outPath, xml, 'utf-8');
 console.log(`[sitemap] ${urls.length} URLs geschreven naar ${outPath}`);
