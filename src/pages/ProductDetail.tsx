@@ -115,14 +115,36 @@ export default function ProductDetail() {
               <span className="text-sm text-gray-500">Inclusief BTW & standaard installatie</span>
             </div>
 
-            <p className="mt-8 text-lg leading-relaxed text-gray-500">
-              {battery.description} De {battery.name} is ontworpen om uw energie-onafhankelijkheid te maximaliseren. Met een bruikbare capaciteit van {battery.capacity} biedt dit systeem voldoende opslag voor een gemiddeld Nederlands huishouden om de avond en nacht door te komen op eigen zonne-energie.
+            <p className="mt-6 text-base leading-relaxed text-gray-500 line-clamp-3 sm:line-clamp-none">
+              {battery.description}
             </p>
 
-            <div className="mt-10 grid grid-cols-2 gap-6 border-y border-gray-100 py-8">
+            {/* CTA-knoppen direct boven de specs-border zodat ze in beeld staan zonder te scrollen. */}
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              {battery.paymentLinkUrl ? (
+                <a
+                  href={battery.paymentLinkUrl}
+                  className="flex-1 flex items-center justify-center gap-2 rounded-full bg-gray-900 py-4 text-center text-base font-bold text-white transition-opacity hover:opacity-90"
+                >
+                  <CreditCard className="h-5 w-5" aria-hidden="true" />
+                  Direct afrekenen
+                </a>
+              ) : null}
+              <button
+                type="button"
+                onClick={() => addToCart(battery)}
+                aria-label={`${battery.name} aan winkelwagen toevoegen`}
+                className="flex-1 flex items-center justify-center gap-2 rounded-full border border-gray-200 bg-white py-4 text-center text-base font-bold text-gray-900 transition-colors hover:bg-gray-50"
+              >
+                <ShoppingCart className="h-5 w-5" aria-hidden="true" />
+                In winkelwagen
+              </button>
+            </div>
+
+            <div className="mt-8 grid grid-cols-2 gap-6 border-y border-gray-100 py-6">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-50 text-gray-900">
-                  <Zap className="h-5 w-5" />
+                  <Zap className="h-5 w-5" aria-hidden="true" />
                 </div>
                 <div>
                   <p className="text-xs font-bold uppercase text-gray-400">Capaciteit</p>
@@ -131,7 +153,7 @@ export default function ProductDetail() {
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-50 text-gray-900">
-                  <Shield className="h-5 w-5" />
+                  <Shield className="h-5 w-5" aria-hidden="true" />
                 </div>
                 <div>
                   <p className="text-xs font-bold uppercase text-gray-400">Garantie</p>
@@ -140,7 +162,7 @@ export default function ProductDetail() {
               </div>
             </div>
 
-            <div className="mt-10">
+            <div className="mt-8">
               <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900">Belangrijkste kenmerken</h3>
               <ul className="mt-6 space-y-4">
                 {battery.features.map((feature: string, idx: number) => (
@@ -150,25 +172,6 @@ export default function ProductDetail() {
                   </li>
                 ))}
               </ul>
-            </div>
-
-            <div className="mt-12 flex flex-col gap-4 sm:flex-row">
-              {battery.paymentLinkUrl ? (
-                <a
-                  href={battery.paymentLinkUrl}
-                  className="flex-1 flex items-center justify-center gap-2 rounded-full bg-gray-900 py-4 text-center text-base font-bold text-white transition-opacity hover:opacity-90"
-                >
-                  <CreditCard className="h-5 w-5" />
-                  Direct afrekenen
-                </a>
-              ) : null}
-              <button
-                onClick={() => addToCart(battery)}
-                className="flex-1 flex items-center justify-center gap-2 rounded-full border border-gray-200 bg-white py-4 text-center text-base font-bold text-gray-900 transition-colors hover:bg-gray-50"
-              >
-                <ShoppingCart className="h-5 w-5" />
-                In winkelwagen
-              </button>
             </div>
           </motion.div>
         </div>

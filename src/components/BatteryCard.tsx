@@ -51,7 +51,7 @@ export default function BatteryCard({ battery }: BatteryCardProps) {
         </p>
 
         {battery.features.length > 0 ? (
-          <div className="mb-6 flex flex-wrap gap-2">
+          <div className="mb-4 flex flex-wrap gap-2">
             {battery.features.slice(0, 3).map((feature, idx) => (
               <span
                 key={idx}
@@ -64,21 +64,9 @@ export default function BatteryCard({ battery }: BatteryCardProps) {
           </div>
         ) : null}
 
-        <div className="mt-auto flex items-center justify-between pt-4 border-t border-gray-100">
-          {battery.capacity ? (
-            <div className="flex flex-col">
-              <span className="text-xs text-gray-400 uppercase font-bold tracking-wider">Capaciteit</span>
-              <span className="text-lg font-bold text-gray-900">{battery.capacity}</span>
-            </div>
-          ) : <div />}
-          <div className="flex flex-col text-right">
-            <span className="text-xs text-gray-400 uppercase font-bold tracking-wider">Vanaf</span>
-            <span className="text-xl font-bold text-gray-900">€{battery.price}</span>
-          </div>
-        </div>
-
-        <div className="mt-6 flex gap-2">
-          <Link 
+        {/* CTA-knoppen boven de prijs/specs-border zodat ze altijd in beeld zijn */}
+        <div className="mt-2 flex gap-2">
+          <Link
             to={`/producten/${battery.id}`}
             className="flex-1 rounded-xl bg-gray-100 py-3 text-center text-sm font-bold text-gray-900 transition-colors hover:bg-gray-200"
           >
@@ -93,6 +81,19 @@ export default function BatteryCard({ battery }: BatteryCardProps) {
           >
             <ShoppingCart className="h-5 w-5" aria-hidden="true" />
           </button>
+        </div>
+
+        <div className="mt-auto flex items-center justify-between pt-4 mt-4 border-t border-gray-100">
+          {battery.capacity ? (
+            <div className="flex flex-col">
+              <span className="text-xs text-gray-400 uppercase font-bold tracking-wider">Capaciteit</span>
+              <span className="text-lg font-bold text-gray-900">{battery.capacity}</span>
+            </div>
+          ) : <div />}
+          <div className="flex flex-col text-right">
+            <span className="text-xs text-gray-400 uppercase font-bold tracking-wider">Vanaf</span>
+            <span className="text-xl font-bold text-gray-900">€{battery.price}</span>
+          </div>
         </div>
       </div>
     </div>
