@@ -13,6 +13,10 @@ export default function EducationDetail() {
     }
   }, [article]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [slug]);
+
   if (!article) {
     return (
       <div className="bg-white py-24">

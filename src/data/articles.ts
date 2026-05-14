@@ -42,10 +42,9 @@ export const articles: Article[] = [
     date: '12 mei 2026',
     readTime: '9 min',
     category: 'Subsidies',
-    image:
-      'https://images.unsplash.com/photo-1509391366360-fe5bb58583bb?auto=format&fit=crop&q=80&w=1600',
-    imageAlt: 'Zonnepanelen op een Nederlands woonhuis bij zonsondergang',
-    imageCredit: 'Foto: Unsplash',
+    image: '/articles/afbouw-salderingsregeling-2027/cover.webp',
+    imageAlt: 'Zonnepanelen op het dak van een Nederlandse rijtjeswoning',
+    imageCredit: 'Foto: Unsplash – Truong Tuyet Ly',
     intro:
       'Op 1 januari 2027 verdwijnt de salderingsregeling definitief. Voor de ongeveer 2,7 miljoen Nederlandse huishoudens met zonnepanelen verandert het verdienmodel daardoor ingrijpend. In dit artikel leggen we uit wat de afbouw precies inhoudt, waarom energieleveranciers nu al een terugleverboete rekenen en hoe een plug & play thuisbatterij u helpt om uw zonnestroom maximaal zelf te gebruiken.',
     sections: [
@@ -102,8 +101,7 @@ export const articles: Article[] = [
     date: '8 mei 2026',
     readTime: '12 min',
     category: 'Technologie',
-    image:
-      'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&q=80&w=1600',
+    image: '/articles/lithium-ion-vs-lfp-veiligheid/cover.webp',
     imageAlt: 'Close-up van lithium-cellen in een batterijmodule',
     imageCredit: 'Foto: Unsplash',
     intro:
@@ -162,9 +160,8 @@ export const articles: Article[] = [
     date: '4 mei 2026',
     readTime: '10 min',
     category: 'Gidsen',
-    image:
-      'https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&q=80&w=1600',
-    imageAlt: 'Modern Nederlands rijtjeshuis met zonnepanelen en thuisbatterij',
+    image: '/articles/capaciteit-thuisbatterij-berekenen/cover.webp',
+    imageAlt: 'Modern Nederlands woonhuis met zonnepanelen op het dak',
     imageCredit: 'Foto: Unsplash',
     intro:
       'Een veelgemaakte fout bij de aanschaf van een thuisbatterij is een capaciteit kiezen die niet past bij uw werkelijke verbruik. Te klein en u mist veel zonneoverschot; te groot en u betaalt voor kWh\'s die u nooit zult gebruiken. In deze gids leiden we u stap voor stap door de berekening, zodat u zelf kunt bepalen of een 2,4 kWh-, 5 kWh- of 10 kWh-systeem het beste past.',
@@ -221,9 +218,8 @@ export const articles: Article[] = [
     date: '28 april 2026',
     readTime: '14 min',
     category: 'Infotainment',
-    image:
-      'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=1600',
-    imageAlt: 'Hoogspanningsmasten in een Nederlands polderlandschap',
+    image: '/articles/smart-grid-energy-trading/cover.webp',
+    imageAlt: 'Hoogspanningsmasten en het Nederlandse elektriciteitsnet bij zonsondergang',
     imageCredit: 'Foto: Unsplash',
     intro:
       'Een thuisbatterij is in 2026 veel meer dan een kale energieopslag. Door slimme software en open API\'s wordt uw batterij een actieve speler op de Nederlandse stroommarkt: hij koopt goedkope nachtstroom in, verkoopt op piekuren, levert regelvermogen aan TenneT en sluit zich aan bij een virtual power plant. In deze gids leggen we uit welke verdienmodellen praktisch beschikbaar zijn en welke nog in de experimentele fase zitten.',
