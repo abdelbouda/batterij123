@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { useCart } from '../context/CartContext';
 import WhatsAppIcon from './WhatsAppIcon';
+import SearchBar from './SearchBar';
 
 // Contactnummer voor WhatsApp CTA — internationaal formaat zonder + voor wa.me.
 const WHATSAPP_NUMBER = '31642008944';
@@ -30,9 +31,9 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-2">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur-md">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <Link to="/" className="flex shrink-0 items-center gap-2">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-900 text-white">
             <Battery className="h-6 w-6" />
           </div>
@@ -42,7 +43,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex md:items-center md:gap-8">
+        <nav className="hidden md:flex md:items-center md:gap-6">
           {navItems.map((item) => (
             <Link
               key={item.path}
@@ -84,7 +85,8 @@ export default function Header() {
             className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-bold text-gray-900 transition-colors hover:bg-gray-100"
           >
             <Mail className="h-4 w-4" aria-hidden="true" />
-            {EMAIL_ADDRESS}
+            <span className="hidden lg:inline">{EMAIL_ADDRESS}</span>
+            <span className="lg:hidden">Mail</span>
           </a>
         </nav>
 
@@ -113,6 +115,13 @@ export default function Header() {
           >
             {isOpen ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
           </button>
+        </div>
+      </div>
+
+      {/* Globale zoekbalk — tweede rij, zichtbaar op alle viewports. */}
+      <div className="border-t border-gray-100 bg-white/95">
+        <div className="mx-auto flex max-w-7xl items-center px-4 py-3 sm:px-6 lg:px-8">
+          <SearchBar compact />
         </div>
       </div>
 

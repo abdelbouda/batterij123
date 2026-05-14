@@ -14,6 +14,7 @@ const Education = lazy(() => import('./pages/Education'));
 const EducationDetail = lazy(() => import('./pages/EducationDetail'));
 const Admin = lazy(() => import('./pages/Admin'));
 const Success = lazy(() => import('./pages/Success'));
+const SearchResults = lazy(() => import('./pages/Search'));
 
 function RouteFallback() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
                 <Route path="/educatie" element={<Education />} />
                 <Route path="/educatie/:slug" element={<EducationDetail />} />
                 <Route path="/admin" element={<Admin />} />
+                <Route path="/zoeken" element={<SearchResults />} />
                 <Route path="/success" element={<Success />} />
                 <Route path="/contact" element={<div className="py-24 text-center text-gray-500">Contactpagina komt binnenkort...</div>} />
               </Routes>
