@@ -25,8 +25,8 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           set +e
-          OUT=$(gh pr checks "$PR" --repo "$REPO" --wait 2>&1)
-          STATUS=$?
+               OUT=$(gh pr checks "$PR" --repo "$REPO" --watch 2>&1)
+               STATUS=$?
           echo "$OUT"
           # Exit 8 = no checks configured -> safe to proceed
           if [ $STATUS -eq 8 ] || echo "$OUT" | grep -qi 'no checks reported'; then
