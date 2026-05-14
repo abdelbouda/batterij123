@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import Education from './pages/Education';
+import EducationDetail from './pages/EducationDetail';
 import ProductDetail from './pages/ProductDetail';
 import Admin from './pages/Admin';
 import Success from './pages/Success';
@@ -28,6 +29,7 @@ export default function App() {
               <Route path="/producten" element={<Products />} />
               <Route path="/producten/:id" element={<ProductDetail />} />
               <Route path="/educatie" element={<Education />} />
+              <Route path="/educatie/:slug" element={<EducationDetail />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/success" element={<Success />} />
               <Route path="/contact" element={<div className="py-24 text-center text-gray-500">Contactpagina komt binnenkort...</div>} />

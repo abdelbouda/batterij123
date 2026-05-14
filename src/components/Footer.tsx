@@ -1,7 +1,35 @@
 import { Battery, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { fetchProducts, type Product } from '../lib/products';
 
 export default function Footer() {
+  const [topProducts, setTopProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchProducts()
+      .then((products) => {
+        if (cancelled) return;
+        // Show 5 home batteries (exclude accessories like the P1 Meter);
+        // fall back to all products if metadata is missing.
+        const batteries = products.filter(
+          (p) =>
+            p.capacity &&
+            p.capacity.trim().length > 0 &&
+            !/p1\s*meter/i.test(p.name),
+        );
+        const list = (batteries.length >= 5 ? batteries : products).slice(0, 5);
+        setTopProducts(list);
+      })
+      .catch(() => {
+        if (!cancelled) setTopProducts([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <footer className="w-full border-t border-gray-200 bg-gray-50 py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -17,7 +45,8 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm text-gray-500 leading-relaxed">
-              De onafhankelijke vergelijker voor thuisbatterijen in Nederland. Wij helpen u de beste keuze te maken voor uw energieopslag.
+              De onafhankelijke vergelijker voor thuisbatterijen in Nederland. Wij helpen u de
+              beste keuze te maken voor uw energieopslag.
             </p>
             <div className="flex gap-4">
               <a href="#" className="text-gray-400 hover:text-gray-900 transition-colors">
@@ -39,21 +68,49 @@ export default function Footer() {
           <div className="flex flex-col gap-4">
             <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900">Navigatie</h3>
             <nav className="flex flex-col gap-2">
-              <Link to="/" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Home</Link>
-              <Link to="/producten" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Producten</Link>
-              <Link to="/educatie" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Educatie</Link>
-              <Link to="/contact" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Contact</Link>
+              <Link to="/" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
+                Home
+              </Link>
+              <Link
+                to="/producten"
+                className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
+              >
+                Producten
+              </Link>
+              <Link
+                to="/educatie"
+                className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
+              >
+                Educatie
+              </Link>
+              <Link
+                to="/contact"
+                className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
+              >
+                Contact
+              </Link>
             </nav>
           </div>
 
-          {/* Popular Brands */}
+          {/* Top Home Batteries (live from Stripe) */}
           <div className="flex flex-col gap-4">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900">Populaire Merken</h3>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900">
+              Populaire thuisbatterijen
+            </h3>
             <nav className="flex flex-col gap-2">
-              <Link to="/producten" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Tesla Powerwall</Link>
-              <Link to="/producten" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">LG Energy Solution</Link>
-              <Link to="/producten" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">BYD Battery-Box</Link>
-              <Link to="/producten" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Enphase IQ Battery</Link>
+              {topProducts.length === 0 ? (
+                <span className="text-sm text-gray-400">Laden...</span>
+              ) : (
+                topProducts.map((p) => (
+                  <Link
+                    key={p.id}
+                    to={`/producten/${p.id}`}
+                    className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
+                  >
+                    {p.name}
+                  </Link>
+                ))
+              )}
             </nav>
           </div>
 
@@ -75,7 +132,8 @@ export default function Footer() {
 
         <div className="mt-12 border-t border-gray-200 pt-8 text-center">
           <p className="text-xs text-gray-400">
-            &copy; {new Date().getFullYear()} Batterij123.nl. Alle rechten voorbehouden. Gemaakt met passie voor duurzame energie.
+            &copy; {new Date().getFullYear()} Batterij123.nl. Alle rechten voorbehouden. Gemaakt
+            met passie voor duurzame energie.
           </p>
         </div>
       </div>
