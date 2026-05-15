@@ -13,6 +13,47 @@ export default function ProductDetail() {
   const [battery, setBattery] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const { addToCart } = useCart();
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+
+  const handleDirectCheckout = async () => {
+    if (!battery) return;
+    setIsCheckingOut(true);
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          items: [
+            {
+              id: battery.id,
+              name: battery.name,
+              priceEur: battery.priceEur,
+              image: battery.image,
+              quantity: 1,
+            },
+          ],
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Fout bij het aanmaken van de Stripe sessie.");
+      }
+
+      const session = await response.json();
+      if (!session.url) {
+        throw new Error("Stripe checkout URL ontbreekt in de response.");
+      }
+      window.location.assign(session.url);
+    } catch (error: any) {
+      console.error("Checkout error:", error);
+      alert(error.message || "Er is een fout opgetreden tijdens het afrekenen.");
+    } finally {
+      setIsCheckingOut(false);
+    }
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -121,15 +162,19 @@ export default function ProductDetail() {
 
             {/* CTA-knoppen direct boven de specs-border zodat ze in beeld staan zonder te scrollen. */}
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              {battery.paymentLinkUrl ? (
-                <a
-                  href={battery.paymentLinkUrl}
-                  className="flex-1 flex items-center justify-center gap-2 rounded-full bg-gray-900 py-4 text-center text-base font-bold text-white transition-opacity hover:opacity-90"
-                >
+              <button
+                type="button"
+                onClick={handleDirectCheckout}
+                disabled={isCheckingOut}
+                className="flex-1 flex items-center justify-center gap-2 rounded-full bg-gray-900 py-4 text-center text-base font-bold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+              >
+                {isCheckingOut ? (
+                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                ) : (
                   <CreditCard className="h-5 w-5" aria-hidden="true" />
-                  Direct afrekenen
-                </a>
-              ) : null}
+                )}
+                {isCheckingOut ? 'Bezig...' : 'Direct afrekenen'}
+              </button>
               <button
                 type="button"
                 onClick={() => addToCart(battery)}

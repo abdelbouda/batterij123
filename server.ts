@@ -17,7 +17,9 @@ async function startServer() {
 
   // Stripe initialization
   const stripe = process.env.STRIPE_SECRET_KEY 
-    ? new Stripe(process.env.STRIPE_SECRET_KEY) 
+    ? new Stripe(process.env.STRIPE_SECRET_KEY, {
+        apiVersion: '2023-10-16' as any,
+      }) 
     : null;
 
   app.use(express.json());
@@ -42,14 +44,14 @@ async function startServer() {
               name: item.name,
               images: [item.image],
             },
-            unit_amount: Math.round(parseFloat(item.price.replace(".", "")) * 100),
+            unit_amount: Math.round((item.priceEur || parseFloat(item.price) || 0) * 100),
           },
           quantity: item.quantity,
         })),
         mode: "payment",
         success_url: `${process.env.APP_URL || "http://localhost:3000"}/success`,
         cancel_url: `${process.env.APP_URL || "http://localhost:3000"}/cart`,
-      });
+      } as any);
 
       res.json({ id: session.id, url: session.url });
     } catch (error: any) {
