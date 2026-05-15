@@ -60,6 +60,24 @@ export default function BatteryCard({ battery, eager }: BatteryCardProps) {
           </div>
         </div>
 
+        <div className="mb-4 flex gap-2">
+          <Link
+            to={`/producten/${battery.id}`}
+            className="flex-1 rounded-xl bg-gray-100 py-3 text-center text-sm font-bold text-gray-900 transition-colors hover:bg-gray-200"
+          >
+            Bekijk Details
+          </Link>
+          <button
+            type="button"
+            onClick={() => addToCart(battery)}
+            aria-label={`${displayName} aan winkelwagen toevoegen`}
+            className="flex h-11 w-11 items-center justify-center rounded-xl bg-gray-900 text-white transition-opacity hover:opacity-90"
+            title="In winkelwagen"
+          >
+            <ShoppingCart className="h-5 w-5" aria-hidden="true" />
+          </button>
+        </div>
+
         <p className="mb-4 text-sm text-gray-600 line-clamp-2 min-h-[2.5rem]">
           {battery.description}
         </p>
@@ -80,27 +98,9 @@ export default function BatteryCard({ battery, eager }: BatteryCardProps) {
 
         {/*
           Onderkant van de kaart staat altijd op gelijke hoogte dankzij `mt-auto`
-          op de hele actie-strook (CTA-knoppen + prijs/specs-row).
+          op de prijs/specs-row.
         */}
         <div className="mt-auto">
-          <div className="flex gap-2">
-            <Link
-              to={`/producten/${battery.id}`}
-              className="flex-1 rounded-xl bg-gray-100 py-3 text-center text-sm font-bold text-gray-900 transition-colors hover:bg-gray-200"
-            >
-              Bekijk Details
-            </Link>
-            <button
-              type="button"
-              onClick={() => addToCart(battery)}
-              aria-label={`${displayName} aan winkelwagen toevoegen`}
-              className="flex h-11 w-11 items-center justify-center rounded-xl bg-gray-900 text-white transition-opacity hover:opacity-90"
-              title="In winkelwagen"
-            >
-              <ShoppingCart className="h-5 w-5" aria-hidden="true" />
-            </button>
-          </div>
-
           <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-4">
             {battery.capacity ? (
               <div className="flex flex-col">

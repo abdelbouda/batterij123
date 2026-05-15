@@ -155,9 +155,10 @@ export default function Footer() {
               <a
                 href={PHONE_URL}
                 aria-label={`Bel ${PHONE_DISPLAY}`}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 transition-colors hover:text-gray-900"
+                className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:text-gray-900"
               >
                 <Phone className="h-4 w-4" aria-hidden="true" />
+                {PHONE_DISPLAY}
               </a>
             </div>
           </div>
