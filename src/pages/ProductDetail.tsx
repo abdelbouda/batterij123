@@ -152,17 +152,12 @@ export default function ProductDetail() {
             
             <h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">{battery.name}</h1>
             
-            <div className="mt-8 flex items-baseline gap-4">
+            <div className="mt-6 flex items-baseline gap-4">
               <span className="text-3xl font-bold text-gray-900">€{battery.price}</span>
               <span className="text-sm text-gray-500">Inclusief BTW & standaard installatie</span>
             </div>
 
-            <p className="mt-6 text-base leading-relaxed text-gray-500 line-clamp-3 sm:line-clamp-none">
-              {battery.description}
-            </p>
-
-            {/* CTA-knoppen direct boven de specs-border zodat ze in beeld staan zonder te scrollen. */}
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
               <button
                 type="button"
                 onClick={handleDirectCheckout}
@@ -186,6 +181,10 @@ export default function ProductDetail() {
                 In winkelwagen
               </button>
             </div>
+
+            <p className="mt-5 text-base leading-relaxed text-gray-500 line-clamp-3 sm:line-clamp-none">
+              {battery.description}
+            </p>
 
             <div className="mt-8 grid grid-cols-2 gap-6 border-y border-gray-100 py-6">
               <div className="flex items-center gap-3">
