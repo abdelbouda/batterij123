@@ -104,7 +104,7 @@ export default function Footer() {
                 to="/educatie"
                 className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
               >
-                Educatie
+                Info
               </Link>
               <Link
                 to="/contact"
@@ -165,7 +165,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 border-t border-gray-200 pt-8 text-center">
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-gray-600">
             &copy; {new Date().getFullYear()} Batterij123.nl. Alle rechten voorbehouden. Gemaakt
             met passie voor duurzame energie.
           </p>
