@@ -142,21 +142,24 @@ export default function Footer() {
             <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900">Contact</h3>
             <p className="text-sm text-gray-600">
               Batterij123 B.V.<br />
-              Energieweg 123<br />
-              1000 AB Amsterdam<br />
-              Nederland
+              Amsterdam
             </p>
-            <p className="text-sm text-gray-600">
-              Email:{' '}
-              <a href={`mailto:${EMAIL_ADDRESS}`} className="hover:text-gray-900">
-                {EMAIL_ADDRESS}
+            <div className="flex items-center gap-3">
+              <a
+                href={`mailto:${EMAIL_ADDRESS}`}
+                aria-label={`Stuur een e-mail naar ${EMAIL_ADDRESS}`}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 transition-colors hover:text-gray-900"
+              >
+                <Mail className="h-4 w-4" aria-hidden="true" />
               </a>
-              <br />
-              Tel:{' '}
-              <a href={PHONE_URL} className="hover:text-gray-900">
-                {PHONE_DISPLAY}
+              <a
+                href={PHONE_URL}
+                aria-label={`Bel ${PHONE_DISPLAY}`}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 transition-colors hover:text-gray-900"
+              >
+                <Phone className="h-4 w-4" aria-hidden="true" />
               </a>
-            </p>
+            </div>
           </div>
         </div>
 

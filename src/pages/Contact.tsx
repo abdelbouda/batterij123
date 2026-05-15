@@ -84,11 +84,7 @@ export default function Contact() {
               <p className="mt-3 text-sm leading-7 text-gray-500">
                 Batterij123 B.V.
                 <br />
-                Energieweg 123
-                <br />
-                1000 AB Amsterdam
-                <br />
-                Nederland
+                Amsterdam
               </p>
             </div>
           </div>
