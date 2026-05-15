@@ -13,8 +13,6 @@ export function organizationSchema() {
       'Onafhankelijke vergelijker voor plug & play thuisbatterijen in Nederland. Bespaar op uw energierekening na de afbouw van de salderingsregeling.',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Energieweg 123',
-      postalCode: '1000 AB',
       addressLocality: 'Amsterdam',
       addressCountry: 'NL',
     },
@@ -39,7 +37,7 @@ export function websiteSchema() {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: `${SITE_URL}/producten?q={search_term_string}`,
+        urlTemplate: `${SITE_URL}/zoeken?q={search_term_string}`,
       },
       'query-input': 'required name=search_term_string',
     },
@@ -62,14 +60,20 @@ export function productListSchema(products: Product[]) {
 
 export function productSchema(product: Product) {
   const priceNumber = product.priceEur || Number(String(product.price).replace(/[^0-9.]/g, ''));
+  const url = `${SITE_URL}/producten/${product.id}`;
+  const priceValidUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .split('T')[0];
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
+    '@id': `${url}#product`,
     name: product.name,
     description: product.description,
     image: product.image,
     brand: { '@type': 'Brand', name: product.brand || SITE_NAME },
     sku: product.stripeProductId,
+    url,
     aggregateRating: product.reviews
       ? {
           '@type': 'AggregateRating',
@@ -79,30 +83,39 @@ export function productSchema(product: Product) {
       : undefined,
     offers: {
       '@type': 'Offer',
-      url: product.paymentLinkUrl ?? `${SITE_URL}/producten/${product.id}`,
+      url,
       priceCurrency: 'EUR',
       price: priceNumber || product.price,
+      priceValidUntil,
       availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
       seller: { '@type': 'Organization', name: SITE_NAME },
     },
   };
 }
 
 export function articleSchema(article: Article) {
+  const url = `${SITE_URL}/educatie/${article.slug}`;
   return {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
     headline: article.title,
     description: article.excerpt,
     image: `${SITE_URL}${article.image}`,
-    datePublished: article.date,
+    datePublished: article.dateIso ?? article.date,
+    dateModified: article.dateIso ?? article.date,
     author: { '@type': 'Person', name: article.author },
     publisher: {
       '@type': 'Organization',
       name: SITE_NAME,
       logo: { '@type': 'ImageObject', url: `${SITE_URL}/favicon.svg` },
     },
-    mainEntityOfPage: `${SITE_URL}/educatie/${article.slug}`,
+    inLanguage: 'nl-NL',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': url,
+    },
   };
 }
 

@@ -45,17 +45,44 @@ const urls: Url[] = [
   { loc: '/contact', changefreq: 'monthly', priority: 0.7, lastmod: contactLastMod },
 ];
 
-// Articles
-for (const a of articles) {
-  urls.push({
-    loc: `/educatie/${a.slug}`,
-    changefreq: 'monthly',
-    priority: 0.7,
-    lastmod: educationLastMod,
-  });
+function buildUrlset(list: Url[]) {
+  return (
+    `<?xml version="1.0" encoding="UTF-8"?>\n` +
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+    list
+      .map(
+        (u) =>
+          `  <url>\n` +
+          `    <loc>${SITE}${u.loc}</loc>\n` +
+          (u.lastmod ? `    <lastmod>${u.lastmod}</lastmod>\n` : '') +
+          (u.changefreq ? `    <changefreq>${u.changefreq}</changefreq>\n` : '') +
+          (u.priority !== undefined ? `    <priority>${u.priority.toFixed(1)}</priority>\n` : '') +
+          `  </url>`,
+      )
+      .join('\n') +
+    `\n</urlset>\n`
+  );
 }
 
-// Stripe products from generated JSON
+function maxLastmod(list: Url[]) {
+  const dates = list.map((u) => u.lastmod).filter(Boolean) as string[];
+  return dates.length > 0 ? dates.sort().at(-1) : undefined;
+}
+
+function writePublic(fileName: string, contents: string) {
+  const outPath = path.join(projectRoot, 'public', fileName);
+  fs.writeFileSync(outPath, contents, 'utf-8');
+  return outPath;
+}
+
+const articleUrls: Url[] = articles.map((a) => ({
+  loc: `/educatie/${a.slug}`,
+  changefreq: 'monthly',
+  priority: 0.7,
+  lastmod: a.dateIso || educationLastMod,
+}));
+
+const productUrls: Url[] = [];
 try {
   const productsPath = path.join(projectRoot, 'products.json');
   if (fs.existsSync(productsPath)) {
@@ -67,36 +94,51 @@ try {
         : [];
     for (const p of list) {
       const slug = p.slug || p.id;
-      if (slug) {
-        urls.push({
-          loc: `/producten/${slug}`,
-          changefreq: 'weekly',
-          priority: 0.8,
-          lastmod: productsLastMod,
-        });
-      }
+      if (!slug) continue;
+      productUrls.push({
+        loc: `/producten/${slug}`,
+        changefreq: 'weekly',
+        priority: 0.8,
+        lastmod: productsLastMod,
+      });
     }
   }
-} catch (err) {
-  console.warn('[sitemap] kon producten niet uit products.json lezen:', err);
-}
+} catch {}
 
-const xml =
+const pagesXml = buildUrlset(urls);
+const productsXml = buildUrlset(productUrls);
+const articlesXml = buildUrlset(articleUrls);
+
+const pagesFile = 'sitemap-pages.xml';
+const productsFile = 'sitemap-products.xml';
+const articlesFile = 'sitemap-articles.xml';
+
+writePublic(pagesFile, pagesXml);
+writePublic(productsFile, productsXml);
+writePublic(articlesFile, articlesXml);
+
+const indexLastmod = maxLastmod([...urls, ...productUrls, ...articleUrls]) || homeLastMod;
+const indexXml =
   `<?xml version="1.0" encoding="UTF-8"?>\n` +
-  `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-  urls
+  `<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+  [
+    { file: pagesFile, lastmod: maxLastmod(urls) || indexLastmod },
+    { file: productsFile, lastmod: maxLastmod(productUrls) || indexLastmod },
+    { file: articlesFile, lastmod: maxLastmod(articleUrls) || indexLastmod },
+  ]
     .map(
-      (u) =>
-        `  <url>\n` +
-        `    <loc>${SITE}${u.loc}</loc>\n` +
-        (u.lastmod ? `    <lastmod>${u.lastmod}</lastmod>\n` : '') +
-        (u.changefreq ? `    <changefreq>${u.changefreq}</changefreq>\n` : '') +
-        (u.priority !== undefined ? `    <priority>${u.priority.toFixed(1)}</priority>\n` : '') +
-        `  </url>`,
+      (s) =>
+        `  <sitemap>\n` +
+        `    <loc>${SITE}/${s.file}</loc>\n` +
+        (s.lastmod ? `    <lastmod>${s.lastmod}</lastmod>\n` : '') +
+        `  </sitemap>`,
     )
     .join('\n') +
-  `\n</urlset>\n`;
+  `\n</sitemapindex>\n`;
 
-const outPath = path.join(projectRoot, 'public', 'sitemap.xml');
-fs.writeFileSync(outPath, xml, 'utf-8');
-console.log(`[sitemap] ${urls.length} URLs geschreven naar ${outPath}`);
+const indexPath = writePublic('sitemap-index.xml', indexXml);
+const legacyPath = writePublic('sitemap.xml', indexXml);
+
+console.log(
+  `[sitemap] index + ${urls.length + productUrls.length + articleUrls.length} URLs geschreven naar ${indexPath} (en ${legacyPath})`,
+);

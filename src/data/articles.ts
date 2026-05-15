@@ -21,6 +21,7 @@ export type Article = {
   excerpt: string;
   author: string;
   date: string;
+  dateIso?: string;
   readTime: string;
   category: 'Subsidies' | 'Technologie' | 'Gidsen' | 'Infotainment' | 'Reviews';
   image: string;
@@ -41,6 +42,7 @@ export const articles: Article[] = [
       'De salderingsregeling verdwijnt per 1 januari 2027. Lees hoe een plug & play thuisbatterij uw zelfconsumptie verhoogt, dynamische tarieven benut en de terugverdientijd verkort.',
     author: 'Mark van Dijk',
     date: '12 mei 2026',
+    dateIso: '2026-05-12',
     readTime: '9 min',
     category: 'Subsidies',
     image: '/articles/afbouw-salderingsregeling-2027/cover.webp',
@@ -101,6 +103,7 @@ export const articles: Article[] = [
       'NMC, LFP, sodium-ion: de chemie achter uw thuisbatterij bepaalt veiligheid, levensduur en prijs. We vergelijken de drie populairste opties van 2026 helder en zonder marketingpraat.',
     author: 'Sarah de Vries',
     date: '8 mei 2026',
+    dateIso: '2026-05-08',
     readTime: '12 min',
     category: 'Technologie',
     image: '/articles/lithium-ion-vs-lfp-veiligheid/cover.webp',
@@ -161,6 +164,7 @@ export const articles: Article[] = [
       'Een te kleine batterij levert weinig op, een te grote betaalt zich nooit terug. Met deze methode berekent u in 5 minuten de ideale kWh-capaciteit voor uw eigen verbruik.',
     author: 'Jan de Boer',
     date: '4 mei 2026',
+    dateIso: '2026-05-04',
     readTime: '10 min',
     category: 'Gidsen',
     image: '/articles/capaciteit-thuisbatterij-berekenen/cover.webp',
@@ -220,6 +224,7 @@ export const articles: Article[] = [
       'Met dynamische tarieven, regelvermogen en virtual power plants verandert uw batterij in een actieve speler op de Nederlandse energiemarkt. Een praktische gids voor 2026.',
     author: 'Ellen Smit',
     date: '28 april 2026',
+    dateIso: '2026-04-28',
     readTime: '14 min',
     category: 'Infotainment',
     image: '/articles/smart-grid-energy-trading/cover.webp',
@@ -280,6 +285,7 @@ export const articles: Article[] = [
       'Wilt u een thuisbatterij kopen maar twijfelt u over de kosten en subsidies? We zetten de actuele prijzen, btw-regelingen en besparingen in Nederland voor u op een rij.',
     author: 'Mark van Dijk',
     date: '15 mei 2026',
+    dateIso: '2026-05-15',
     readTime: '11 min',
     category: 'Subsidies',
     image: '/articles/afbouw-salderingsregeling-2027/cover.webp',
