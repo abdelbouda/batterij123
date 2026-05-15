@@ -2,8 +2,8 @@ import { Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { usePageMeta } from '../lib/seo';
 
 const EMAIL_ADDRESS = 'info@batterij123.nl';
-const PHONE_DISPLAY = '+31 (0)20 123 4567';
-const PHONE_URL = 'tel:+31201234567';
+const PHONE_DISPLAY = '06-42008944';
+const PHONE_URL = 'tel:+31642008944';
 const WHATSAPP_URL = `https://wa.me/31642008944?text=${encodeURIComponent(
   'Hoi! Ik heb een vraag over een thuisbatterij van Batterij123.',
 )}`;

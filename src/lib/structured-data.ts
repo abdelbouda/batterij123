@@ -21,6 +21,7 @@ export function organizationSchema() {
     contactPoint: {
       '@type': 'ContactPoint',
       email: 'info@batterij123.nl',
+      telephone: '+31642008944',
       contactType: 'customer service',
       availableLanguage: ['Dutch', 'English'],
     },
