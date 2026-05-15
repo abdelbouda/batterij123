@@ -7,7 +7,8 @@ export type BatteryProps = Product;
 
 interface BatteryCardProps {
   battery: Product;
-  key?: string;
+  eager?: boolean;
+  key?: string | number;
 }
 
 /**
@@ -19,7 +20,7 @@ function shortName(name: string): string {
   return name.split(/\s+[\u2013\u2014]\s+|\s+-\s+/)[0].trim();
 }
 
-export default function BatteryCard({ battery }: BatteryCardProps) {
+export default function BatteryCard({ battery, eager }: BatteryCardProps) {
   const { addToCart } = useCart();
   const displayName = shortName(battery.name);
 
@@ -32,7 +33,8 @@ export default function BatteryCard({ battery }: BatteryCardProps) {
           alt={`${displayName} thuisbatterij — ${battery.brand}`}
           width="600"
           height="450"
-          loading="lazy"
+          loading={eager ? 'eager' : 'lazy'}
+          fetchPriority={eager ? 'high' : 'auto'}
           decoding="async"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />

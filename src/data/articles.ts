@@ -261,10 +261,63 @@ export const articles: Article[] = [
     ],
     takeaways: [
       'Dynamisch contract = makkelijkste extra opbrengst (€150-€400/jaar).',
-      'Virtual Power Plants geven €50-€150/jaar voor 5 kWh aan beschikbaarheid.',
+      'Virtual Power Plants geven €50-€150/jaar for 5 kWh aan beschikbaarheid.',
       'TenneT regelvermogen is sinds 2024 ook voor particuliere batterijen open.',
       'P1 Meter + slimme meter zijn voorwaarde voor optimale aansturing.',
       'U houdt altijd controle: zelf grenzen instellen in de app.',
+    ],
+  },
+  {
+    id: 5,
+    slug: 'thuisbatterij-kosten-subsidie-2026',
+    title: 'Thuisbatterij kosten & subsidie 2026: wat betaalt u echt?',
+    excerpt:
+      'Wilt u een thuisbatterij kopen maar twijfelt u over de kosten en subsidies? We zetten de actuele prijzen, btw-regelingen en besparingen in Nederland voor u op een rij.',
+    author: 'Mark van Dijk',
+    date: '15 mei 2026',
+    readTime: '11 min',
+    category: 'Subsidies',
+    image: '/articles/afbouw-salderingsregeling-2027/cover.webp',
+    imageAlt: 'Thuisbatterij installatie in een Nederlandse garage',
+    imageCredit: 'Foto: Unsplash',
+    intro:
+      'Een van de meest gestelde vragen in 2026 is: "Wat kost een thuisbatterij nu echt en krijg ik nog subsidie?". Hoewel de prijzen spectaculair zijn gedaald, blijft het een flinke investering. In dit artikel duiken we in de exacte thuisbatterij kosten, leggen we uit hoe u de btw terugvraagt en welke verborgen subsidies u via dynamische contracten kunt benutten.',
+    sections: [
+      {
+        heading: 'Actuele thuisbatterij kosten in 2026',
+        paragraphs: [
+          'De prijs van een thuisbatterij wordt bepaald door de capaciteit (kWh) en de technologie (LFP vs NMC). Voor een plug & play thuisbatterij met stekker betaalt u in 2026 gemiddeld tussen de €400 en €600 per kWh.',
+          'Voor een gemiddeld gezin dat 5 kWh aan opslag nodig heeft, komt de totale investering uit op ongeveer €2.500 tot €3.500. Dit is inclusief de benodigde aansturing zoals een P1-meter, maar exclusief eventuele installatiekosten door een elektricien.',
+        ],
+      },
+      {
+        heading: 'Is er nog thuisbatterij subsidie beschikbaar?',
+        paragraphs: [
+          'Op dit moment is er in Nederland geen landelijke ISDE-subsidie voor thuisbatterijen, zoals die wel bestaat voor warmtepompen en zonneboilers. De overheid richt zich voorlopig op het stimuleren van zelfconsumptie via de afbouw van de salderingsregeling.',
+          'Toch zijn er lokale subsidies. Sommige gemeentes en provincies bieden duurzaamheidsleningen met 0% of zeer lage rente aan voor energieopslag. Check hiervoor altijd de Energiesubsidiewijzer van Milieu Centraal.',
+        ],
+      },
+      {
+        heading: 'Btw terugvragen: de "stille" subsidie',
+        paragraphs: [
+          'De belangrijkste financiële meevaller is de btw-teruggave. Als u een thuisbatterij koopt en deze gebruikt om energie te verhandelen via een dynamisch contract (laden bij lage prijzen, ontladen bij hoge prijzen), ziet de Belastingdienst u als ondernemer.',
+          'U kunt dan de volledige 21% btw op de aanschafprijs terugvragen. Bij een systeem van €3.000 scheelt dit direct €630. Let op: dit vereist wel een specifieke aanmelding bij de fiscus, vergelijkbaar met hoe dat vroeger voor zonnepanelen werkte.',
+        ],
+      },
+      {
+        heading: 'Besparing en terugverdientijd',
+        paragraphs: [
+          'Met een thuisbatterij bespaart u op twee manieren: u vermijdt de inkoop van dure stroom en u voorkomt de terugleverboete van uw energieleverancier. Gemiddeld bespaart een 5 kWh batterij in Nederland zo\'n €400 tot €600 per jaar op de energierekening.',
+          'In combinatie met de btw-teruggave komt de netto terugverdientijd hiermee uit op 5 tot 7 jaar. Gezien de levensduur van moderne LFP-batterijen (15-20 jaar) is dit een zeer rendabele investering.',
+        ],
+      },
+    ],
+    takeaways: [
+      'Gemiddelde kosten: €400 - €600 per kWh opslagcapaciteit.',
+      'Geen landelijke subsidie, maar wel lokale stimuleringsregelingen.',
+      'Vraag de 21% btw terug via de Belastingdienst (bij dynamisch contract).',
+      'Terugverdientijd is inmiddels gedaald naar 5 tot 7 jaar.',
+      'LFP-technologie is de meest kostenefficiënte keuze in 2026.',
     ],
   },
 ];

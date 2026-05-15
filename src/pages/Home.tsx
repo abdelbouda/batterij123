@@ -17,9 +17,9 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   usePageMeta({
-    title: 'Batterij123 | Vergelijk plug & play thuisbatterijen voor 2026',
+    title: 'Thuisbatterij Kopen & Vergelijken Nederland | Batterij123',
     description:
-      'Onafhankelijke vergelijker voor plug & play thuisbatterijen in Nederland. Vergelijk Marstek, HomeWizard, Zendure, EcoFlow, Anker en Sessy. Bespaar op uw energierekening na de afbouw van de salderingsregeling 2027.',
+      'Wilt u een thuisbatterij kopen? Vergelijk de beste plug & play thuisbatterijen van 2026. Bekijk de actuele thuisbatterij kosten, subsidies en besparingen in Nederland.',
     canonicalPath: '/',
   });
 
@@ -54,21 +54,15 @@ export default function Home() {
             </motion.div>
             
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
               className="mt-6 max-w-3xl text-5xl font-bold tracking-tight text-gray-900 sm:text-7xl"
             >
               De beste thuisbatterij voor <span className="text-gray-400">uw woning</span>
             </motion.h1>
             
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
               className="mt-8 max-w-2xl text-lg leading-relaxed text-gray-500"
             >
-              Vergelijk de populairste plug & play thuisbatterijen van 2026. Onafhankelijk advies, reviews en live prijzen voor energieopslag in Nederland — ideaal na de afbouw van de salderingsregeling.
+              Vergelijk de populairste plug & play thuisbatterijen van 2026. Onafhankelijk advies, reviews en de laagste <strong>thuisbatterij kosten</strong> voor energieopslag in Nederland — ideaal na de afbouw van de salderingsregeling.
             </motion.p>
             
             <motion.div
@@ -120,8 +114,12 @@ export default function Home() {
                     Producten laden...
                   </div>
                 ) : (
-                  batteries.map((battery) => (
-                    <BatteryCard key={battery.id} battery={battery} />
+                  batteries.map((battery, idx) => (
+                    <BatteryCard 
+                      key={battery.id} 
+                      battery={battery} 
+                      eager={idx < 4}
+                    />
                   ))
                 )}
               </div>
@@ -227,26 +225,34 @@ export default function Home() {
       <section className="bg-white py-24">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="prose prose-gray max-w-none">
-            <h2 className="text-3xl font-bold text-gray-900">Waarom kiezen voor een thuisbatterij in Nederland?</h2>
+            <h2 className="text-3xl font-bold text-gray-900">Thuisbatterij kopen in Nederland: alles wat u moet weten</h2>
             <p className="mt-6 text-gray-500 leading-relaxed">
-              Met de afbouw van de salderingsregeling in het vooruitzicht wordt een thuisbatterij steeds interessanter voor Nederlandse huishoudens. Een thuisbatterij stelt u in staat om de overdag opgewekte zonne-energie op te slaan en 's avonds te gebruiken wanneer de zon niet schijnt.
+              Bent u van plan een <strong>thuisbatterij te kopen</strong>? Met de afbouw van de salderingsregeling in het vooruitzicht wordt een <strong>thuisbatterij in Nederland</strong> steeds interessanter voor huishoudens met zonnepanelen. Een thuisbatterij stelt u in staat om de overdag opgewekte zonne-energie op te slaan en 's avonds te gebruiken wanneer de zon niet schijnt.
             </p>
+            
+            <h3 className="mt-10 text-2xl font-bold text-gray-900">Thuisbatterij vergelijken: waar moet u op letten?</h3>
             <p className="mt-4 text-gray-500 leading-relaxed">
-              Bij Batterij123.nl helpen we u bij het vinden van de juiste batterij. Of u nu op zoek bent naar een Tesla Powerwall, een LG RESU of een modulaire BYD oplossing, wij bieden de meest actuele informatie en prijzen. Onze vergelijker houdt rekening met capaciteit, ontlaadvermogen, garantie en natuurlijk de prijs-kwaliteitverhouding.
+              Bij het <strong>thuisbatterij vergelijken</strong> zijn er drie belangrijke factoren: de capaciteit (kWh), het vermogen (kW) en de levensduur. Voor de meeste Nederlandse woningen is een <strong>thuisbatterij met stekker</strong> (plug & play) de eenvoudigste oplossing. Deze systemen, zoals van HomeWizard of EcoFlow, installeert u zelf binnen 10 minuten zonder tussenkomst van een dure installateur.
             </p>
+
+            <h3 className="mt-10 text-2xl font-bold text-gray-900">Wat zijn de thuisbatterij kosten en is er subsidie?</h3>
+            <p className="mt-4 text-gray-500 leading-relaxed">
+              De <strong>thuisbatterij kosten</strong> zijn de afgelopen jaren fors gedaald. Voor een instapmodel betaalt u tegenwoordig tussen de €1.000 en €2.000. Hoewel er momenteel geen landelijke <strong>thuisbatterij subsidie</strong> is voor particulieren, kunt u de btw (21%) in veel gevallen terugvragen via de Belastingdienst als u een dynamisch energiecontract heeft en de batterij gebruikt voor energiehandel.
+            </p>
+
             <h3 className="mt-10 text-2xl font-bold text-gray-900">De voordelen van Batterij123.nl</h3>
             <ul className="mt-6 space-y-4 text-gray-500">
               <li className="flex items-center gap-3">
                 <CheckCircle2 className="h-5 w-5 text-gray-900" />
-                <span>Altijd de scherpste offertes van lokale installateurs.</span>
+                <span>Onafhankelijke vergelijking van alle topmerken in Nederland.</span>
               </li>
               <li className="flex items-center gap-3">
                 <CheckCircle2 className="h-5 w-5 text-gray-900" />
-                <span>Onafhankelijke reviews van duizenden gebruikers.</span>
+                <span>Focus op plug & play systemen: bespaar op installatiekosten.</span>
               </li>
               <li className="flex items-center gap-3">
                 <CheckCircle2 className="h-5 w-5 text-gray-900" />
-                <span>Expert-artikelen over de nieuwste technologieën.</span>
+                <span>Altijd de meest actuele prijzen en voorraadstatus.</span>
               </li>
             </ul>
           </div>
