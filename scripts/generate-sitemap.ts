@@ -11,6 +11,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { articles } from '../src/data/articles.js';
+import { infoHubs } from '../src/data/info-hubs.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,11 +37,13 @@ function getFileLastMod(relativePath: string, fallback?: string) {
 const homeLastMod = getFileLastMod(path.join('src', 'pages', 'Home.tsx'));
 const productsLastMod = getFileLastMod(path.join('products.json'), homeLastMod);
 const educationLastMod = getFileLastMod(path.join('src', 'data', 'articles.ts'), homeLastMod);
+const infoLastMod = getFileLastMod(path.join('src', 'data', 'info-hubs.ts'), homeLastMod);
 const contactLastMod = getFileLastMod(path.join('src', 'pages', 'Contact.tsx'), homeLastMod);
 
 const urls: Url[] = [
   { loc: '/', changefreq: 'weekly', priority: 1.0, lastmod: homeLastMod },
   { loc: '/producten', changefreq: 'daily', priority: 0.9, lastmod: productsLastMod },
+  { loc: '/info', changefreq: 'weekly', priority: 0.8, lastmod: infoLastMod },
   { loc: '/educatie', changefreq: 'weekly', priority: 0.8, lastmod: educationLastMod },
   { loc: '/contact', changefreq: 'monthly', priority: 0.7, lastmod: contactLastMod },
 ];
@@ -80,6 +83,13 @@ const articleUrls: Url[] = articles.map((a) => ({
   changefreq: 'monthly',
   priority: 0.7,
   lastmod: a.dateIso || educationLastMod,
+}));
+
+const infoUrls: Url[] = infoHubs.map((h) => ({
+  loc: `/info/${h.slug}`,
+  changefreq: 'monthly',
+  priority: 0.7,
+  lastmod: infoLastMod,
 }));
 
 const productUrls: Url[] = [];
@@ -139,7 +149,7 @@ const indexXml =
 const indexPath = writePublic('sitemap-index.xml', indexXml);
 const legacyPath = writePublic(
   'sitemap.xml',
-  buildUrlset([...urls, ...productUrls, ...articleUrls]),
+  buildUrlset([...urls, ...productUrls, ...articleUrls, ...infoUrls]),
 );
 
 console.log(

@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { CheckCircle2, ArrowLeft, Star, Zap, Shield, ShoppingCart, CreditCard } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useCart } from '../context/CartContext';
@@ -7,6 +7,7 @@ import JsonLd from '../components/JsonLd';
 import { fetchProducts, type Product } from '../lib/products';
 import { usePageMeta } from '../lib/seo';
 import { breadcrumbSchema, productSchema } from '../lib/structured-data';
+import { articles } from '../data/articles';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -14,6 +15,12 @@ export default function ProductDetail() {
   const [loading, setLoading] = useState(true);
   const { addToCart } = useCart();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const relatedArticles = useMemo(() => {
+    if (!id) return [];
+    return articles
+      .filter((a) => (a.relatedProductIds ?? []).includes(id))
+      .slice(0, 3);
+  }, [id]);
 
   const handleDirectCheckout = async () => {
     if (!battery) return;
@@ -218,6 +225,26 @@ export default function ProductDetail() {
                 ))}
               </ul>
             </div>
+
+            {relatedArticles.length > 0 && (
+              <div className="mt-10 rounded-3xl border border-gray-200 bg-gray-50 p-6">
+                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900">Lees meer</h3>
+                <p className="mt-2 text-sm text-gray-600">
+                  Extra uitleg en tips over dit type product in onze Info-sectie.
+                </p>
+                <div className="mt-5 grid gap-3">
+                  {relatedArticles.map((a) => (
+                    <Link
+                      key={a.slug}
+                      to={`/educatie/${a.slug}`}
+                      className="rounded-2xl bg-white px-4 py-3 text-sm font-bold text-gray-900 hover:underline"
+                    >
+                      {a.title}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </motion.div>
         </div>
 

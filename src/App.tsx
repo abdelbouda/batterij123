@@ -10,6 +10,8 @@ import { CartProvider, useCart } from './context/CartContext';
 // paint zo licht mogelijk is. Andere routes laden on-demand.
 const Products = lazy(() => import('./pages/Products'));
 const ProductDetail = lazy(() => import('./pages/ProductDetail'));
+const Info = lazy(() => import('./pages/Info'));
+const InfoDetail = lazy(() => import('./pages/InfoDetail'));
 const Education = lazy(() => import('./pages/Education'));
 const EducationDetail = lazy(() => import('./pages/EducationDetail'));
 const Contact = lazy(() => import('./pages/Contact'));
@@ -49,6 +51,8 @@ export default function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/producten" element={<Products />} />
                 <Route path="/producten/:id" element={<ProductDetail />} />
+                <Route path="/info" element={<Info />} />
+                <Route path="/info/:slug" element={<InfoDetail />} />
                 <Route path="/educatie" element={<Education />} />
                 <Route path="/educatie/:slug" element={<EducationDetail />} />
                 <Route path="/contact" element={<Contact />} />

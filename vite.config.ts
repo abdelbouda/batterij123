@@ -20,7 +20,6 @@ export default defineConfig(() => {
             'react-vendor': ['react', 'react-dom', 'react-router-dom'],
             motion: ['motion', 'motion/react'],
             icons: ['lucide-react'],
-            stripe: ['@stripe/stripe-js'],
           },
         },
       },

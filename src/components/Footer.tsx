@@ -101,7 +101,7 @@ export default function Footer() {
                 Producten
               </Link>
               <Link
-                to="/educatie"
+                to="/info"
                 className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
               >
                 Info
