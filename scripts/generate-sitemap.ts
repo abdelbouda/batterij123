@@ -137,8 +137,11 @@ const indexXml =
   `\n</sitemapindex>\n`;
 
 const indexPath = writePublic('sitemap-index.xml', indexXml);
-const legacyPath = writePublic('sitemap.xml', indexXml);
+const legacyPath = writePublic(
+  'sitemap.xml',
+  buildUrlset([...urls, ...productUrls, ...articleUrls]),
+);
 
 console.log(
-  `[sitemap] index + ${urls.length + productUrls.length + articleUrls.length} URLs geschreven naar ${indexPath} (en ${legacyPath})`,
+  `[sitemap] index + ${urls.length + productUrls.length + articleUrls.length} URLs geschreven naar ${indexPath} (en ${legacyPath} als legacy urlset)`,
 );
