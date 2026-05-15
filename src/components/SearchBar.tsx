@@ -40,7 +40,7 @@ export default function SearchBar({ compact = false }: { compact?: boolean }) {
       </label>
       <Search
         aria-hidden="true"
-        className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
+        className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-600"
       />
       <input
         id="global-search"
@@ -49,14 +49,14 @@ export default function SearchBar({ compact = false }: { compact?: boolean }) {
         onChange={(e) => setValue(e.target.value)}
         placeholder="Zoek thuisbatterij, merk of artikel…"
         aria-label="Zoek op product, merk of artikel"
-        className="w-full rounded-full border border-gray-200 bg-gray-50 py-2 pl-10 pr-10 text-sm text-gray-900 placeholder:text-gray-400 focus:border-gray-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-gray-900"
+        className="w-full rounded-full border border-gray-200 bg-gray-50 py-2 pl-10 pr-10 text-sm text-gray-900 placeholder:text-gray-600 focus:border-gray-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-gray-900"
       />
       {value && (
         <button
           type="button"
           onClick={() => setValue('')}
           aria-label="Zoekopdracht wissen"
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-900"
         >
           <X className="h-4 w-4" aria-hidden="true" />
         </button>

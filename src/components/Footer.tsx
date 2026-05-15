@@ -48,10 +48,10 @@ export default function Footer() {
                 <Battery className="h-5 w-5" />
               </div>
               <span className="text-lg font-bold tracking-tight text-gray-900">
-                Batterij<span className="text-gray-500">123</span>
+                Batterij<span className="text-gray-600">123</span>
               </span>
             </Link>
-            <p className="text-sm text-gray-500 leading-relaxed">
+            <p className="text-sm text-gray-600 leading-relaxed">
               De onafhankelijke vergelijker voor thuisbatterijen in Nederland. Wij helpen u de
               beste keuze te maken voor uw energieopslag.
             </p>
@@ -91,24 +91,24 @@ export default function Footer() {
           <div className="flex flex-col gap-4">
             <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900">Navigatie</h3>
             <nav className="flex flex-col gap-2">
-              <Link to="/" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
+              <Link to="/" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
                 Home
               </Link>
               <Link
                 to="/producten"
-                className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
+                className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
               >
                 Producten
               </Link>
               <Link
                 to="/educatie"
-                className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
+                className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
               >
                 Educatie
               </Link>
               <Link
                 to="/contact"
-                className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
+                className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
               >
                 Contact
               </Link>
@@ -122,13 +122,13 @@ export default function Footer() {
             </h3>
             <nav className="flex flex-col gap-2">
               {topProducts.length === 0 ? (
-                <span className="text-sm text-gray-400">Laden...</span>
+                <span className="text-sm text-gray-600">Laden...</span>
               ) : (
                 topProducts.map((p) => (
                   <Link
                     key={p.id}
                     to={`/producten/${p.id}`}
-                    className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
+                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
                   >
                     {p.name}
                   </Link>
@@ -140,13 +140,13 @@ export default function Footer() {
           {/* Contact Info */}
           <div className="flex flex-col gap-4">
             <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900">Contact</h3>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-600">
               Batterij123 B.V.<br />
               Energieweg 123<br />
               1000 AB Amsterdam<br />
               Nederland
             </p>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-600">
               Email:{' '}
               <a href={`mailto:${EMAIL_ADDRESS}`} className="hover:text-gray-900">
                 {EMAIL_ADDRESS}

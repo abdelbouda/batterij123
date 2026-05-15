@@ -38,7 +38,7 @@ export default function Header() {
             <Battery className="h-6 w-6" />
           </div>
           <span className="text-xl font-bold tracking-tight text-gray-900">
-            Batterij<span className="text-gray-500">123</span>
+            Batterij<span className="text-gray-600">123</span>
           </span>
         </Link>
 
@@ -50,7 +50,7 @@ export default function Header() {
               to={item.path}
               className={cn(
                 "text-sm font-medium transition-colors hover:text-gray-900",
-                location.pathname === item.path ? "text-gray-900" : "text-gray-500"
+                location.pathname === item.path ? "text-gray-900" : "text-gray-600"
               )}
             >
               {item.name}
@@ -135,7 +135,7 @@ export default function Header() {
                 to={item.path}
                 className={cn(
                   "text-base font-medium transition-colors",
-                  location.pathname === item.path ? "text-gray-900" : "text-gray-500"
+                  location.pathname === item.path ? "text-gray-900" : "text-gray-600"
                 )}
                 onClick={() => setIsOpen(false)}
               >

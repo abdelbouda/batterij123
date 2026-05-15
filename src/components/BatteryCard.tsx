@@ -56,11 +56,11 @@ export default function BatteryCard({ battery, eager }: BatteryCardProps) {
           <div className="flex shrink-0 items-center gap-1 text-yellow-500">
             <Star className="h-4 w-4 fill-current" aria-hidden="true" />
             <span className="text-sm font-bold text-gray-900">{battery.rating}</span>
-            <span className="text-xs text-gray-500">({battery.reviews})</span>
+            <span className="text-xs text-gray-600">({battery.reviews})</span>
           </div>
         </div>
 
-        <p className="mb-4 text-sm text-gray-500 line-clamp-2 min-h-[2.5rem]">
+        <p className="mb-4 text-sm text-gray-600 line-clamp-2 min-h-[2.5rem]">
           {battery.description}
         </p>
 
@@ -104,12 +104,12 @@ export default function BatteryCard({ battery, eager }: BatteryCardProps) {
           <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-4">
             {battery.capacity ? (
               <div className="flex flex-col">
-                <span className="text-xs font-bold uppercase tracking-wider text-gray-400">Capaciteit</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-gray-500">Capaciteit</span>
                 <span className="text-lg font-bold text-gray-900">{battery.capacity}</span>
               </div>
             ) : <div />}
             <div className="flex flex-col text-right">
-              <span className="text-xs font-bold uppercase tracking-wider text-gray-400">Vanaf</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-gray-500">Vanaf</span>
               <span className="text-xl font-bold text-gray-900">€{battery.price}</span>
             </div>
           </div>

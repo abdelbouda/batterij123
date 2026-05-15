@@ -64,7 +64,7 @@ export default function CartDrawer() {
               </div>
               <button
                 onClick={() => setIsCartOpen(false)}
-                className="rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-900"
+                className="rounded-full p-2 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900"
               >
                 <X className="h-6 w-6" />
               </button>
@@ -73,8 +73,8 @@ export default function CartDrawer() {
             <div className="flex-1 overflow-y-auto p-6">
               {cart.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center text-center">
-                  <ShoppingBag className="mb-4 h-12 w-12 text-gray-200" />
-                  <p className="text-gray-500">Uw winkelwagen is leeg</p>
+                  <ShoppingBag className="mb-4 h-12 w-12 text-gray-300" />
+                  <p className="text-gray-600">Uw winkelwagen is leeg</p>
                 </div>
               ) : (
                 <div className="flex flex-col gap-6">
@@ -90,15 +90,15 @@ export default function CartDrawer() {
                         </div>
                         <div className="mt-2 flex items-center justify-between">
                           <div className="flex items-center gap-3 rounded-full border border-gray-200 px-3 py-1">
-                            <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="text-gray-400 hover:text-gray-900">
+                            <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="text-gray-600 hover:text-gray-900">
                               <Minus className="h-3 w-3" />
                             </button>
                             <span className="text-xs font-bold">{item.quantity}</span>
-                            <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="text-gray-400 hover:text-gray-900">
+                            <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="text-gray-600 hover:text-gray-900">
                               <Plus className="h-3 w-3" />
                             </button>
                           </div>
-                          <button onClick={() => removeFromCart(item.id)} className="text-red-500 hover:text-red-700">
+                          <button onClick={() => removeFromCart(item.id)} className="text-red-600 hover:text-red-700">
                             <Trash2 className="h-4 w-4" />
                           </button>
                         </div>
@@ -127,8 +127,8 @@ export default function CartDrawer() {
                   )}
                   {isCheckingOut ? 'Bezig...' : 'Direct afrekenen'}
                 </button>
-                <div className="mt-4 flex items-center justify-center gap-2 text-[10px] text-gray-400">
-                  <ShieldCheck className="h-3 w-3 text-green-500" />
+                <div className="mt-4 flex items-center justify-center gap-2 text-[10px] text-gray-600">
+                  <ShieldCheck className="h-3 w-3 text-green-600" />
                   <span>Veilig betalen met SSL-beveiliging</span>
                 </div>
               </div>

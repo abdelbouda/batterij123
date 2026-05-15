@@ -56,11 +56,11 @@ export default function Home() {
             <motion.h1
               className="mt-6 max-w-3xl text-5xl font-bold tracking-tight text-gray-900 sm:text-7xl"
             >
-              De beste thuisbatterij voor <span className="text-gray-400">uw woning</span>
+              De beste thuisbatterij voor <span className="text-gray-500">uw woning</span>
             </motion.h1>
             
             <motion.p
-              className="mt-8 max-w-2xl text-lg leading-relaxed text-gray-500"
+              className="mt-8 max-w-2xl text-lg leading-relaxed text-gray-600"
             >
               Vergelijk de populairste plug & play thuisbatterijen van 2026. Onafhankelijk advies, reviews en de laagste <strong>thuisbatterij kosten</strong> voor energieopslag in Nederland — ideaal na de afbouw van de salderingsregeling.
             </motion.p>
@@ -96,7 +96,7 @@ export default function Home() {
                   <h2 className="text-3xl font-bold tracking-tight text-gray-900">
                     Populaire Thuisbatterijen
                   </h2>
-                  <p className="mt-3 text-base text-gray-500">
+                  <p className="mt-3 text-base text-gray-600">
                     De best geteste modellen van dit moment.
                   </p>
                 </div>
@@ -176,7 +176,7 @@ export default function Home() {
                 <span>Educatie & Infotainment</span>
               </div>
               <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl">Alles wat u moet weten over energieopslag</h2>
-              <p className="mt-6 text-lg text-gray-400 leading-relaxed">
+              <p className="mt-6 text-lg text-gray-300 leading-relaxed">
                 Van de werking van lithium-batterijen tot de nieuwste subsidies in Nederland. Onze experts delen hun kennis om u te helpen navigeren in de wereld van duurzame energie.
               </p>
               <div className="mt-10 flex flex-col gap-6">
@@ -185,8 +185,8 @@ export default function Home() {
                     <CheckCircle2 className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-bold">Salderingsregeling 2027</h4>
-                    <p className="text-sm text-gray-400">Hoe verandert uw verdienmodel na de afbouw van saldering?</p>
+                    <h3 className="font-bold">Salderingsregeling 2027</h3>
+                    <p className="text-sm text-gray-300">Hoe verandert uw verdienmodel na de afbouw van saldering?</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -194,8 +194,8 @@ export default function Home() {
                     <CheckCircle2 className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-bold">Terugverdientijd</h4>
-                    <p className="text-sm text-gray-400">Bereken hoe snel u uw investering terugverdient.</p>
+                    <h3 className="font-bold">Terugverdientijd</h3>
+                    <p className="text-sm text-gray-300">Bereken hoe snel u uw investering terugverdient.</p>
                   </div>
                 </div>
               </div>
