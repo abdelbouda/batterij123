@@ -4,8 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
-import { CartProvider } from './context/CartContext';
-import CartDrawer from './components/CartDrawer';
+import { CartProvider, useCart } from './context/CartContext';
 
 // Code-split routes: alleen Home staat in de hoofd-bundel zodat de eerste
 // paint zo licht mogelijk is. Andere routes laden on-demand.
@@ -16,12 +15,23 @@ const EducationDetail = lazy(() => import('./pages/EducationDetail'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Success = lazy(() => import('./pages/Success'));
 const SearchResults = lazy(() => import('./pages/Search'));
+const LazyCartDrawer = lazy(() => import('./components/CartDrawer'));
 
 function RouteFallback() {
   return (
     <div className="flex min-h-[40vh] items-center justify-center" role="status" aria-live="polite">
       <span className="text-sm text-gray-400">Laden…</span>
     </div>
+  );
+}
+
+function CartDrawerLoader() {
+  const { isCartOpen } = useCart();
+  if (!isCartOpen) return null;
+  return (
+    <Suspense fallback={null}>
+      <LazyCartDrawer />
+    </Suspense>
   );
 }
 
@@ -32,7 +42,7 @@ export default function App() {
         <ScrollToTop />
         <div className="flex min-h-screen flex-col bg-white selection:bg-gray-900 selection:text-white">
           <Header />
-          <CartDrawer />
+          <CartDrawerLoader />
           <main className="flex-1">
             <Suspense fallback={<RouteFallback />}>
               <Routes>

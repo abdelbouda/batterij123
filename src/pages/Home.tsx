@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { motion } from 'motion/react';
 import { CheckCircle2, ArrowRight, Zap, Shield, TrendingUp, Info } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import BatteryCard from '../components/BatteryCard';
@@ -43,34 +42,20 @@ export default function Home() {
       <section className="relative overflow-hidden bg-white pb-16 pt-8 lg:pb-20 lg:pt-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 rounded-full bg-gray-100 px-4 py-1.5 text-sm font-bold text-gray-900"
-            >
+            <div className="inline-flex items-center gap-2 rounded-full bg-gray-100 px-4 py-1.5 text-sm font-bold text-gray-900">
               <Zap className="h-4 w-4" />
               <span>Bespaar tot 70% op uw energierekening</span>
-            </motion.div>
+            </div>
             
-            <motion.h1
-              className="mt-6 max-w-3xl text-5xl font-bold tracking-tight text-gray-900 sm:text-7xl"
-            >
+            <h1 className="mt-6 max-w-3xl text-5xl font-bold tracking-tight text-gray-900 sm:text-7xl">
               De beste thuisbatterij voor <span className="text-gray-500">uw woning</span>
-            </motion.h1>
+            </h1>
             
-            <motion.p
-              className="mt-8 max-w-2xl text-lg leading-relaxed text-gray-600"
-            >
+            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-gray-600">
               Vergelijk de populairste plug & play thuisbatterijen van 2026. Onafhankelijk advies, reviews en de laagste <strong>thuisbatterij kosten</strong> voor energieopslag in Nederland — ideaal na de afbouw van de salderingsregeling.
-            </motion.p>
+            </p>
             
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="mt-10 flex flex-wrap gap-4"
-            >
+            <div className="mt-10 flex flex-wrap gap-4">
               <Link
                 to="/producten"
                 className="rounded-full bg-gray-900 px-8 py-4 text-base font-bold text-white transition-opacity hover:opacity-90"
@@ -83,14 +68,9 @@ export default function Home() {
               >
                 Hoe werkt het?
               </Link>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="mt-16 w-full lg:mt-20"
-            >
+            <div className="mt-16 w-full lg:mt-20">
               <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                 <div>
                   <h2 className="text-3xl font-bold tracking-tight text-gray-900">
@@ -123,7 +103,7 @@ export default function Home() {
                   ))
                 )}
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
 
