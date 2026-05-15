@@ -7,6 +7,7 @@ interface CartItem {
   priceEur: number;
   image: string;
   quantity: number;
+  stripePriceId?: string | null;
 }
 
 interface CartContextType {
@@ -61,7 +62,13 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const clearCart = () => setCart([]);
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = cart.reduce((sum, item) => sum + (item.priceEur || 0) * item.quantity, 0);
+  const totalPrice = cart.reduce((sum, item) => {
+    const numeric =
+      typeof item.priceEur === 'number' && Number.isFinite(item.priceEur)
+        ? item.priceEur
+        : parseFloat(String(item.price ?? '0').replace(',', '.')) || 0;
+    return sum + numeric * item.quantity;
+  }, 0);
 
   return (
     <CartContext.Provider

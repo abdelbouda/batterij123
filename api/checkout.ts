@@ -28,23 +28,38 @@ export default async function handler(req: any, res: any) {
   const { items } = req.body;
 
   try {
+    const paymentMethodTypes = (process.env.STRIPE_PAYMENT_METHOD_TYPES || 'card,ideal')
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean) as any;
+
     const session = await stripe.checkout.sessions.create({
-      automatic_payment_methods: { enabled: true },
-      line_items: items.map((item: any) => ({
-        price_data: {
-          currency: 'eur',
-          product_data: {
-            name: item.name,
-            images: [item.image],
+      payment_method_types: paymentMethodTypes,
+      line_items: (Array.isArray(items) ? items : []).map((item: any) => {
+        const quantity = typeof item.quantity === 'number' ? item.quantity : 1;
+        const priceId = item.stripePriceId || item.priceId;
+        if (priceId) {
+          return { price: priceId, quantity };
+        }
+        return {
+          price_data: {
+            currency: 'eur',
+            product_data: {
+              name: item.name,
+              images: item.image ? [item.image] : [],
+            },
+            unit_amount: Math.round(
+              (item.priceEur || parseFloat(String(item.price).replace(',', '.')) || 0) *
+                100,
+            ),
           },
-          unit_amount: Math.round((item.priceEur || parseFloat(item.price) || 0) * 100),
-        },
-        quantity: item.quantity,
-      })),
+          quantity,
+        };
+      }),
       mode: 'payment',
       success_url: `${process.env.APP_URL || 'http://localhost:3000'}/success`,
       cancel_url: `${process.env.APP_URL || 'http://localhost:3000'}/cart`,
-    } as any);
+    });
 
     res.status(200).json({ id: session.id, url: session.url });
   } catch (error: any) {

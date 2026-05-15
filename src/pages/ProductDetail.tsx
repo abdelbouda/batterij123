@@ -29,6 +29,7 @@ export default function ProductDetail() {
             {
               id: battery.id,
               name: battery.name,
+              stripePriceId: battery.stripePriceId,
               priceEur: battery.priceEur,
               image: battery.image,
               quantity: 1,

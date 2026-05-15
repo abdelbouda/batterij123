@@ -40,6 +40,7 @@ interface ProductOut {
   paymentLinkUrl: string | null;
   productUrl: string | null;
   stripeProductId: string;
+  stripePriceId: string | null;
 }
 
 function parseFeatures(meta: Stripe.Metadata | null): string[] {
@@ -102,11 +103,15 @@ export default async function handler(req: any, res: any) {
       const slug = meta.slug || p.id;
 
       let priceEur = 0;
+      let stripePriceId: string | null = null;
       if (p.default_price && typeof p.default_price !== 'string') {
         const dp = p.default_price as Stripe.Price;
+        stripePriceId = dp.id;
         if (typeof dp.unit_amount === 'number') {
           priceEur = Math.round(dp.unit_amount / 100);
         }
+      } else if (typeof p.default_price === 'string') {
+        stripePriceId = p.default_price;
       }
 
       const rating = meta.rating ? Number(meta.rating) : 4.7;
@@ -128,6 +133,7 @@ export default async function handler(req: any, res: any) {
           linksBySlug.get(slug) ?? linksByProductId.get(p.id) ?? null,
         productUrl: p.url || null,
         stripeProductId: p.id,
+        stripePriceId,
       });
     }
 

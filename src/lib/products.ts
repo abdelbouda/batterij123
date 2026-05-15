@@ -20,6 +20,7 @@ export interface Product {
   paymentLinkUrl: string | null;
   productUrl: string | null;
   stripeProductId: string;
+  stripePriceId: string | null;
 }
 
 let cache: { products: Product[]; expires: number } | null = null;
