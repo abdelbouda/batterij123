@@ -29,6 +29,7 @@ export type Article = {
   intro: string;
   sections: ArticleSection[];
   takeaways: string[];
+  relatedProductIds?: string[];
 };
 
 export const articles: Article[] = [
@@ -90,6 +91,7 @@ export const articles: Article[] = [
       'Met een dynamisch contract verdient u extra op piek- en daluren.',
       'Realistische terugverdientijd in 2027: 6 tot 9 jaar.',
     ],
+    relatedProductIds: ['marstek-venus-e3', 'ecoflow-stream', 'homewizard-p1-meter'],
   },
   {
     id: 2,
@@ -149,6 +151,7 @@ export const articles: Article[] = [
       'Let op CE-keurmerk, BMS en minimaal 10 jaar garantie.',
       'Verwacht 6.000-10.000 laadcycli bij een goede LFP-batterij.',
     ],
+    relatedProductIds: ['marstek-venus-a', 'ecoflow-stream', 'zendure-solarflow-2400'],
   },
   {
     id: 3,
@@ -207,6 +210,7 @@ export const articles: Article[] = [
       'Voor warmtepomp/EV: kies een gekoppeld systeem met hybride omvormer.',
       'Begin niet meteen te groot; modulair uitbreiden kan altijd later.',
     ],
+    relatedProductIds: ['marstek-venus-e3', 'growatt-nexa-2000', 'ecoflow-stream'],
   },
   {
     id: 4,
@@ -266,6 +270,7 @@ export const articles: Article[] = [
       'P1 Meter + slimme meter zijn voorwaarde voor optimale aansturing.',
       'U houdt altijd controle: zelf grenzen instellen in de app.',
     ],
+    relatedProductIds: ['homewizard-p1-meter', 'ecoflow-stream', 'marstek-venus-e3'],
   },
   {
     id: 5,
@@ -319,6 +324,7 @@ export const articles: Article[] = [
       'Terugverdientijd is inmiddels gedaald naar 5 tot 7 jaar.',
       'LFP-technologie is de meest kostenefficiënte keuze in 2026.',
     ],
+    relatedProductIds: ['marstek-venus-a', 'ecoflow-stream', 'homewizard-p1-meter'],
   },
 ];
 

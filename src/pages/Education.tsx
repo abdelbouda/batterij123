@@ -1,12 +1,13 @@
 import { Clock, User, ArrowRight, Search, Tag, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
 import { articles } from '../data/articles';
 import JsonLd from '../components/JsonLd';
 import { usePageMeta } from '../lib/seo';
 import { breadcrumbSchema, faqSchema } from '../lib/structured-data';
+import { fetchProducts, type Product } from '../lib/products';
 
 const faqs = [
   {
@@ -88,6 +89,7 @@ function FAQItem({ question, answer }: { question: string; answer: string; key?:
 export default function Education() {
   const [activeCategory, setActiveCategory] = useState<(typeof categories)[number]>('Alle');
   const [query, setQuery] = useState('');
+  const [topProducts, setTopProducts] = useState<Product[]>([]);
 
   usePageMeta({
     title: 'Kennisbank thuisbatterijen | Salderingsregeling 2027 | Batterij123',
@@ -111,6 +113,28 @@ export default function Education() {
 
   const featured = filtered[0];
   const rest = filtered.slice(1);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchProducts()
+      .then((products) => {
+        if (cancelled) return;
+        const batteries = products.filter(
+          (p) =>
+            p.capacity &&
+            p.capacity.trim().length > 0 &&
+            !/p1\s*meter/i.test(p.name),
+        );
+        const list = (batteries.length >= 5 ? batteries : products).slice(0, 5);
+        setTopProducts(list);
+      })
+      .catch(() => {
+        if (!cancelled) setTopProducts([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <div className="bg-white py-12">
@@ -152,6 +176,33 @@ export default function Education() {
         </div>
 
         {/* Categories */}
+        <div className="mb-12 rounded-3xl border border-gray-200 bg-gray-50 p-8">
+          <h2 className="text-xl font-bold text-gray-900">Vergelijk direct plug &amp; play batterijen</h2>
+          <p className="mt-2 text-sm text-gray-600">
+            Vanuit de kennisbank naar de productvergelijker: bekijk de populairste modellen of ga
+            naar het volledige overzicht.
+          </p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
+              {topProducts.map((p) => (
+                <Link
+                  key={p.id}
+                  to={`/producten/${p.id}`}
+                  className="font-bold text-gray-900 hover:underline"
+                >
+                  {p.name}
+                </Link>
+              ))}
+            </div>
+            <Link
+              to="/producten"
+              className="inline-flex items-center justify-center rounded-full bg-gray-900 px-5 py-3 text-sm font-bold text-white hover:opacity-90"
+            >
+              Alle producten
+            </Link>
+          </div>
+        </div>
+
         <div className="mb-12 flex flex-wrap gap-3">
           {categories.map((cat) => (
             <button

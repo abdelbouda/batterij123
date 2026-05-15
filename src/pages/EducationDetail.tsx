@@ -1,14 +1,16 @@
 import { ArrowLeft, Clock, User, Tag, CheckCircle2 } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { articles, getArticleBySlug } from '../data/articles';
 import JsonLd from '../components/JsonLd';
 import { usePageMeta, SITE_URL } from '../lib/seo';
 import { articleSchema, breadcrumbSchema } from '../lib/structured-data';
+import { fetchProducts, type Product } from '../lib/products';
 
 export default function EducationDetail() {
   const { slug } = useParams<{ slug: string }>();
   const article = slug ? getArticleBySlug(slug) : undefined;
+  const [products, setProducts] = useState<Product[]>([]);
 
   usePageMeta({
     title: article
@@ -23,6 +25,21 @@ export default function EducationDetail() {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, [slug]);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchProducts()
+      .then((list) => {
+        if (cancelled) return;
+        setProducts(list);
+      })
+      .catch(() => {
+        if (!cancelled) setProducts([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   if (!article) {
     return (
@@ -44,6 +61,23 @@ export default function EducationDetail() {
   }
 
   const related = articles.filter((a) => a.slug !== article.slug).slice(0, 3);
+  const recommendedProducts = useMemo(() => {
+    if (!article) return [];
+    if (products.length === 0) return [];
+
+    const byId = new Map(products.map((p) => [p.id, p]));
+    const configured = (article.relatedProductIds ?? [])
+      .map((id) => byId.get(id))
+      .filter(Boolean) as Product[];
+
+    const remaining = products.filter((p) => !configured.some((c) => c.id === p.id));
+    const batteries = remaining.filter(
+      (p) => p.capacity && p.capacity.trim().length > 0 && !/p1\s*meter/i.test(p.name),
+    );
+    const fallbackPool = batteries.length > 0 ? batteries : remaining;
+    const filler = fallbackPool.slice(0, Math.max(0, 3 - configured.length));
+    return [...configured, ...filler].slice(0, 3);
+  }, [article, products]);
 
   return (
     <article className="bg-white py-12">
@@ -155,6 +189,44 @@ export default function EducationDetail() {
             Bekijk thuisbatterijen
           </Link>
         </div>
+
+        {recommendedProducts.length > 0 && (
+          <section className="mt-16">
+            <h2 className="text-2xl font-bold text-gray-900">Aanbevolen producten</h2>
+            <p className="mt-3 text-sm text-gray-500">
+              Deze producten passen goed bij het onderwerp van dit artikel. Klik om te vergelijken
+              en direct af te rekenen.
+            </p>
+            <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
+              {recommendedProducts.map((p) => (
+                <Link
+                  key={p.id}
+                  to={`/producten/${p.id}`}
+                  className="group overflow-hidden rounded-3xl border border-gray-200 bg-white transition-shadow hover:shadow-md"
+                >
+                  <div className="aspect-[16/10] overflow-hidden bg-gray-100">
+                    <img
+                      src={p.image}
+                      alt={`${p.name} productfoto`}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-5">
+                    <div className="text-xs font-bold uppercase tracking-wider text-gray-400">
+                      {p.brand}
+                    </div>
+                    <div className="mt-1 text-sm font-bold text-gray-900 group-hover:underline">
+                      {p.name}
+                    </div>
+                    <div className="mt-3 text-sm font-bold text-gray-900">€{p.price}</div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
 
         {related.length > 0 && (
           <section className="mt-24">
