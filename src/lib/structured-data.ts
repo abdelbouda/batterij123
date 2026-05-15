@@ -8,7 +8,7 @@ export function organizationSchema() {
     '@type': 'Organization',
     name: SITE_NAME,
     url: SITE_URL,
-    logo: `${SITE_URL}/favicon.svg`,
+    logo: `${SITE_URL}/icon-512.png`,
     description:
       'Onafhankelijke vergelijker voor plug & play thuisbatterijen in Nederland. Bespaar op uw energierekening na de afbouw van de salderingsregeling.',
     address: {
@@ -109,7 +109,7 @@ export function articleSchema(article: Article) {
     publisher: {
       '@type': 'Organization',
       name: SITE_NAME,
-      logo: { '@type': 'ImageObject', url: `${SITE_URL}/favicon.svg` },
+      logo: { '@type': 'ImageObject', url: `${SITE_URL}/icon-512.png` },
     },
     inLanguage: 'nl-NL',
     mainEntityOfPage: {
