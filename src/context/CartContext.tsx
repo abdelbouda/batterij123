@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { fetchProducts } from '../lib/products';
 
 interface CartItem {
   id: string;
@@ -30,6 +31,33 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return savedCart ? JSON.parse(savedCart) : [];
   });
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  useEffect(() => {
+    if (cart.length === 0) return;
+    let cancelled = false;
+    fetchProducts()
+      .then((products) => {
+        if (cancelled) return;
+        setCart((prevCart) =>
+          prevCart.map((item) => {
+            const match = products.find((p) => p.id === item.id);
+            if (!match) return item;
+            return {
+              ...item,
+              name: match.name,
+              image: match.image,
+              price: match.price,
+              priceEur: match.priceEur,
+              stripePriceId: match.stripePriceId,
+            };
+          }),
+        );
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
