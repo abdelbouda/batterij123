@@ -1,107 +1,154 @@
 import Stripe from 'stripe';
 import axios from 'axios';
-import * as cheerio from 'cheerio';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Initialiseer Stripe met je geheime sleutel uit je .env bestand
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const SERPAPI_KEY = process.env.SERPAPI_API_KEY;
 
-async function scrapePrice(url) {
+// Functie om de productnaam op te schonen (als back-up fallback)
+function cleanProductName(name) {
+  let clean = name.split('—')[0].split('-')[0];
+  return clean.trim();
+}
+
+// Helperfunctie om Google Shopping te doorzoeken via SerpApi
+async function getLowestGoogleShoppingPrice(searchQuery) {
   try {
-    if (!url) return null;
-    const { data } = await axios.get(url, {
-      headers: { 
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' 
-      },
-      timeout: 10000
-    });
-    const $ = cheerio.load(data);
-    let priceText = '';
+    console.log(`[*] Zoeken op Google Shopping naar: "${searchQuery}"...`);
     
-    // Selectors voor de specifieke platformen
-    if (url.includes('thuisbatterij.io')) {
-      priceText = $('.price .amount, .woocommerce-Price-amount').first().text(); 
-    } else if (url.includes('thuisbatterij.nl')) {
-      priceText = $('.woocommerce-Price-amount, .price').first().text();
+    const response = await axios.get('https://serpapi.com/search.json', {
+      params: {
+        engine: 'google_shopping',
+        q: searchQuery, // Dit is nu de EAN, de opgeschoonde modelnaam, of de fallback query
+        hl: 'nl',
+        gl: 'nl',
+        api_key: SERPAPI_KEY
+      }
+    });
+
+    const shoppingResults = response.data.shopping_results;
+
+    if (!shoppingResults || shoppingResults.length === 0) {
+      console.log(`[-] Geen Google Shopping resultaten gevonden voor: ${searchQuery}`);
+      return null;
     }
 
-    if (!priceText) return null;
+    let lowestPrice = Infinity;
+    let lowestPriceUrl = '';
+    let itemTitle = '';
 
-    // Maak de tekst schoon: filter alles behalve cijfers, komma's en punten
-    let cleanPrice = priceText.replace(/[^\d,.-]/g, '').replace(',', '.');
-    let price = parseFloat(cleanPrice);
-    
-    return isNaN(price) ? null : price;
+    shoppingResults.forEach(item => {
+      let price = item.extracted_price || parseFloat(item.price?.replace(/[^\d,.-]/g, '').replace(',', '.'));
+      
+      if (price && price < lowestPrice) {
+        lowestPrice = price;
+        lowestPriceUrl = item.link || item.product_link;
+        itemTitle = item.title;
+      }
+    });
+
+    if (lowestPrice === Infinity) return null;
+
+    return {
+      price: lowestPrice,
+      url: lowestPriceUrl,
+      title: itemTitle
+    };
+
   } catch (error) {
-    console.error(`[-] Scrape-fout voor ${url}:`, error.message);
+    console.error(`[-] SerpApi fout voor ${searchQuery}:`, error.message);
     return null;
   }
 }
 
 async function runArbitrage() {
-  console.log('[*] Starten van de Stripe Arbitrage scan...');
+  console.log('[*] Starten van de Google Shopping (EAN & Model-geoptimaliseerde) Prijs-update scan...');
   
+  if (!SERPAPI_KEY) {
+    console.error('[-] Kritieke fout: SERPAPI_API_KEY ontbreekt in je .env bestand!');
+    return;
+  }
+
   try {
-    // 1. Haal alle actieve producten op uit je Stripe account
     const products = await stripe.products.list({ active: true, limit: 100 });
     console.log(`[*] ${products.data.length} actieve producten opgehaald uit Stripe.`);
 
     for (const product of products.data) {
-      const { competitor_url1, competitor_url2 } = product.metadata || {};
-
-      // Alleen verwerken als er minimaal één concurrenten-url in de Stripe metadata staat
-      if (!competitor_url1 && !competitor_url2) {
-        continue;
-      }
-
+      const { ean } = product.metadata || {};
+      
+      // Bepaal de definitieve zoekterm:
+      // 1. Als er een EAN/Model-tag in de metadata staat, gebruik die direct.
+      // 2. Zo niet, gebruik dan de dynamisch opgeschoonde productnaam als fallback.
+      const searchQuery = ean ? ean.trim() : cleanProductName(product.name);
+      
       console.log(`\n[*] Verwerken van product: ${product.name}`);
+      console.log(`    ➔ Zoek-ID via metadata/cleaner: "${searchQuery}"`);
 
-      // 2. Haal de prijzen op van de concurrenten
-      const price1 = await scrapePrice(competitor_url1);
-      const price2 = await scrapePrice(competitor_url2);
+      // 1. Zoek de laagste prijs op internet
+      const competitorResult = await getLowestGoogleShoppingPrice(searchQuery);
 
-      const validPrices = [price1, price2].filter(p => p !== null);
-      if (validPrices.length === 0) {
-        console.log(`[-] Geen prijzen kunnen vinden op de concurrenten-URL's voor ${product.name}.`);
+      if (!competitorResult) {
+        console.log(`[-] Kon geen betrouwbare concurrentenprijs vinden voor ${product.name}. Overslaan.`);
         continue;
       }
 
-      const lowestCompetitorPrice = Math.min(...validPrices);
-      const lowestCompetitorUrl = lowestCompetitorPrice === price1 ? competitor_url1 : competitor_url2;
-      console.log(`[+] Laagste concurrentenprijs gevonden: €${lowestCompetitorPrice} via ${lowestCompetitorUrl}`);
+      console.log(`[+] Match gevonden: "${competitorResult.title}"`);
+      console.log(`[+] Goedkoopste aanbieder op internet: €${competitorResult.price.toFixed(2)}`);
 
-      // 3. Haal je eigen standaard verkoopprijs op uit Stripe
-      if (!product.default_price) {
-        console.log(`[-] Product ${product.name} heeft geen default_price ingesteld in Stripe. Overslaan.`);
+      // 2. Bereken de NIEUWE live Stripe prijs: competitor_price + 100
+      const nieuwePrijsInEuro = competitorResult.price + 100;
+      const nieuwePrijsInCenten = Math.round(nieuwePrijsInEuro * 100);
+      console.log(`[+] Doelprijs voor jouw Stripe-shop (Competitor + 100): €${nieuwePrijsInEuro.toFixed(2)}`);
+
+      // 3. Haal je HUIDIGE prijs op uit Stripe om onnodige updates te voorkomen
+      let huidigeStripePrijs = 0;
+      if (product.default_price) {
+        const priceObject = await stripe.prices.retrieve(product.default_price);
+        huidigeStripePrijs = priceObject.unit_amount / 100;
+        console.log(`[*] Jouw huidige Stripe verkoopprijs: €${huidigeStripePrijs.toFixed(2)}`);
+      }
+
+      // Als de prijs al exact gelijk is aan de doelprijs, skippen we hem direct
+      if (huidigeStripePrijs === nieuwePrijsInEuro) {
+        console.log(`✅ Prijs is al up-to-date (€${huidigeStripePrijs.toFixed(2)}). Geen actie vereist.`);
         continue;
       }
 
-      const priceObject = await stripe.prices.retrieve(product.default_price);
-      const huidigeStripePrijs = priceObject.unit_amount / 100; // Stripe rekent in centen
-      console.log(`[*] Jouw huidige Stripe verkoopprijs: €${huidigeStripePrijs}`);
+      console.log(`[*] Prijsverschil gedetecteerd. Updaten naar €${nieuwePrijsInEuro.toFixed(2)}...`);
 
-      // 4. Bereken de arbitrage: huidige verkoopprijs - competitor_price + 100
-      const arbitrageWaarde = huidigeStripePrijs - lowestCompetitorPrice + 100;
-      console.log(`[+] Berekende arbitrage: €${arbitrageWaarde.toFixed(2)}`);
-
-      // 5. Update de metadata in Stripe direct
-      await stripe.products.update(product.id, {
-        metadata: {
-          competitor_price: lowestCompetitorPrice.toFixed(2),
-          competitor_url: lowestCompetitorUrl,
-          arbitrage: arbitrageWaarde.toFixed(2)
-        }
+      // 4. Maak de NIEUWE prijs aan in Stripe
+      const stripePriceObject = await stripe.prices.create({
+        product: product.id,
+        unit_amount: nieuwePrijsInCenten,
+        currency: 'eur',
       });
-      console.log(`✅ Stripe metadata succesvol bijgewerkt voor: ${product.name}`);
+
+      // 5. Bereken de pure arbitrage-waarde (verschil tussen jouw nieuwe prijs en internet)
+      const arbitrageWaarde = nieuwePrijsInEuro - competitorResult.price;
+
+      // 6. Update het product met de nieuwe default_price en verrijk de metadata
+      const updatedMetadata = {
+        ...product.metadata,
+        competitor_price: competitorResult.price.toFixed(2),
+        competitor_url: competitorResult.url,
+        arbitrage: arbitrageWaarde.toFixed(2)
+      };
+
+      await stripe.products.update(product.id, {
+        default_price: stripePriceObject.id,
+        metadata: updatedMetadata
+      });
+
+      console.log(`✅ Stripe product en LIVE VERKOOPPRIJS succesvol bijgewerkt voor: ${product.name}`);
     }
 
   } catch (error) {
     console.error('[-] Kritieke fout tijdens de arbitrage run:', error.message);
   }
   
-  console.log('\n[*] Arbitrage scan voltooid.');
+  console.log('\n[*] Prijs-update scan voltooid.');
 }
 
 runArbitrage();
